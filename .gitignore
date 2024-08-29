@@ -1,0 +1,29 @@
+__pycache__
+.idea
+.DS_Store
+*.egg-info
+build
+dist
+.venv
+.vscode
+.triton
+lightning_studio
+triton
+.lightning_studio
+# data
+data
+pretrain_dataset
+pretrained_model
+pretrained_model_log
+datasets
+!litgpt/data
+!tests/data
+checkpoints
+out
+wandb
+events.out.tfevents*
+get-pip.py 
+# test artifacts from tests/test_readme.py
+**/custom_finetuning_dataset.json
+client.py
+**/custom_texts/
