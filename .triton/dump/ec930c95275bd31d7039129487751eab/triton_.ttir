@@ -1,0 +1,22 @@
+module {
+  tt.func public @triton__0d1de(%arg0: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg1: i32 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}) attributes {noinline = false} {
+    %cst = arith.constant dense<5.000000e+01> : tensor<1024xf32>
+    %cst_0 = arith.constant dense<6.250000e-02> : tensor<1024xf32>
+    %c1024_i32 = arith.constant 1024 : i32
+    %0 = tt.get_program_id x : i32
+    %1 = arith.muli %0, %c1024_i32 : i32
+    %2 = tt.make_range {end = 1024 : i32, start = 0 : i32} : tensor<1024xi32>
+    %3 = tt.splat %1 : (i32) -> tensor<1024xi32>
+    %4 = arith.addi %3, %2 : tensor<1024xi32>
+    %5 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %6 = tt.addptr %5, %4 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %7 = tt.load %6 {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %8 = arith.extf %7 : tensor<1024xbf16> to tensor<1024xf32>
+    %9 = arith.mulf %8, %cst_0 : tensor<1024xf32>
+    %10 = arith.divf %9, %cst : tensor<1024xf32>
+    %11 = tt.extern_elementwise %10 {libname = "libdevice", libpath = "/home/zeus/miniconda3/envs/cloudspace/lib/python3.10/site-packages/triton/language/../third_party/cuda/lib/libdevice.10.bc", pure = true, symbol = "__nv_tanhf"} : (tensor<1024xf32>) -> tensor<1024xf32>
+    %12 = arith.truncf %11 : tensor<1024xf32> to tensor<1024xbf16>
+    tt.store %6, %12 {cache = 1 : i32, evict = 1 : i32} : tensor<1024xbf16>
+    tt.return
+  }
+}

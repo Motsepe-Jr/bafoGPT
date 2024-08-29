@@ -1,0 +1,120 @@
+module {
+  tt.func public @triton__0d1d2d3d4d5de(%arg0: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg5: i32 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}) attributes {noinline = false} {
+    %cst = arith.constant dense<0.000000e+00> : tensor<1024xbf16>
+    %cst_0 = arith.constant dense<384> : tensor<1024xi32>
+    %cst_1 = arith.constant dense<640> : tensor<1024xi32>
+    %cst_2 = arith.constant dense<512> : tensor<1024xi32>
+    %cst_3 = arith.constant dense<-128> : tensor<1024xi32>
+    %cst_4 = arith.constant dense<128> : tensor<1024xi32>
+    %cst_5 = arith.constant dense<128> : tensor<1024xi64>
+    %cst_6 = arith.constant dense<0.000000e+00> : tensor<1024xf32>
+    %cst_7 = arith.constant dense<4096> : tensor<1024xi32>
+    %cst_8 = arith.constant dense<1024> : tensor<1024xi32>
+    %cst_9 = arith.constant dense<2> : tensor<1024xi32>
+    %cst_10 = arith.constant dense<256> : tensor<1024xi64>
+    %cst_11 = arith.constant dense<524288> : tensor<1024xi32>
+    %cst_12 = arith.constant dense<2048> : tensor<1024xi32>
+    %cst_13 = arith.constant dense<256> : tensor<1024xi32>
+    %c1024_i32 = arith.constant 1024 : i32
+    %0 = tt.get_program_id x : i32
+    %1 = arith.muli %0, %c1024_i32 : i32
+    %2 = tt.make_range {end = 1024 : i32, start = 0 : i32} : tensor<1024xi32>
+    %3 = tt.splat %1 : (i32) -> tensor<1024xi32>
+    %4 = arith.addi %3, %2 : tensor<1024xi32>
+    %5 = arith.remsi %4, %cst_13 : tensor<1024xi32>
+    %6 = arith.divsi %4, %cst_13 : tensor<1024xi32>
+    %7 = arith.remsi %6, %cst_12 : tensor<1024xi32>
+    %8 = arith.divsi %4, %cst_11 : tensor<1024xi32>
+    %9 = arith.remsi %4, %cst_11 : tensor<1024xi32>
+    %10 = arith.extsi %5 : tensor<1024xi32> to tensor<1024xi64>
+    %11 = arith.cmpi slt, %10, %cst_10 : tensor<1024xi64>
+    %12 = arith.remsi %8, %cst_9 : tensor<1024xi32>
+    %13 = arith.muli %12, %cst_13 : tensor<1024xi32>
+    %14 = arith.addi %5, %13 : tensor<1024xi32>
+    %15 = arith.divsi %8, %cst_9 : tensor<1024xi32>
+    %16 = arith.muli %15, %cst_8 : tensor<1024xi32>
+    %17 = arith.addi %14, %16 : tensor<1024xi32>
+    %18 = arith.muli %7, %cst_7 : tensor<1024xi32>
+    %19 = arith.addi %17, %18 : tensor<1024xi32>
+    %20 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %21 = tt.addptr %20, %19 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %22 = tt.load %21, %11, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %23 = arith.extf %22 : tensor<1024xbf16> to tensor<1024xf32>
+    %24 = tt.splat %arg1 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %25 = tt.addptr %24, %9 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %26 = tt.load %25, %11, %cst {cache = 1 : i32, evict = 3 : i32, isVolatile = false} : tensor<1024xbf16>
+    %27 = arith.extf %26 : tensor<1024xbf16> to tensor<1024xf32>
+    %28 = arith.mulf %23, %27 : tensor<1024xf32>
+    %29 = arith.cmpi slt, %10, %cst_5 : tensor<1024xi64>
+    %30 = arith.andi %29, %11 : tensor<1024xi1>
+    %31 = arith.addi %5, %cst_4 : tensor<1024xi32>
+    %32 = arith.addi %31, %13 : tensor<1024xi32>
+    %33 = arith.addi %32, %16 : tensor<1024xi32>
+    %34 = arith.addi %33, %18 : tensor<1024xi32>
+    %35 = tt.addptr %20, %34 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %36 = tt.load %35, %30, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %37 = arith.extf %36 : tensor<1024xbf16> to tensor<1024xf32>
+    %38 = arith.subf %cst_6, %37 : tensor<1024xf32>
+    %39 = arith.select %30, %38, %cst_6 : tensor<1024xi1>, tensor<1024xf32>
+    %40 = arith.cmpi sge, %10, %cst_5 : tensor<1024xi64>
+    %41 = arith.andi %40, %11 : tensor<1024xi1>
+    %42 = arith.addi %5, %cst_3 : tensor<1024xi32>
+    %43 = arith.addi %42, %13 : tensor<1024xi32>
+    %44 = arith.addi %43, %16 : tensor<1024xi32>
+    %45 = arith.addi %44, %18 : tensor<1024xi32>
+    %46 = tt.addptr %20, %45 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %47 = tt.load %46, %41, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %48 = arith.extf %47 : tensor<1024xbf16> to tensor<1024xf32>
+    %49 = arith.select %41, %48, %cst_6 : tensor<1024xi1>, tensor<1024xf32>
+    %50 = arith.select %29, %39, %49 : tensor<1024xi1>, tensor<1024xf32>
+    %51 = tt.splat %arg2 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %52 = tt.addptr %51, %9 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %53 = tt.load %52, %11, %cst {cache = 1 : i32, evict = 3 : i32, isVolatile = false} : tensor<1024xbf16>
+    %54 = arith.extf %53 : tensor<1024xbf16> to tensor<1024xf32>
+    %55 = arith.mulf %50, %54 : tensor<1024xf32>
+    %56 = arith.addf %28, %55 : tensor<1024xf32>
+    %57 = arith.cmpi sge, %10, %cst_10 : tensor<1024xi64>
+    %58 = tt.load %21, %57, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %59 = arith.extf %58 : tensor<1024xbf16> to tensor<1024xf32>
+    %60 = arith.select %57, %59, %cst_6 : tensor<1024xi1>, tensor<1024xf32>
+    %61 = arith.select %11, %56, %60 : tensor<1024xi1>, tensor<1024xf32>
+    %62 = arith.addi %5, %cst_2 : tensor<1024xi32>
+    %63 = arith.addi %62, %16 : tensor<1024xi32>
+    %64 = arith.addi %63, %18 : tensor<1024xi32>
+    %65 = tt.addptr %20, %64 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %66 = tt.load %65, %11, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %67 = arith.extf %66 : tensor<1024xbf16> to tensor<1024xf32>
+    %68 = arith.mulf %67, %27 : tensor<1024xf32>
+    %69 = arith.addi %5, %cst_1 : tensor<1024xi32>
+    %70 = arith.addi %69, %16 : tensor<1024xi32>
+    %71 = arith.addi %70, %18 : tensor<1024xi32>
+    %72 = tt.addptr %20, %71 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %73 = tt.load %72, %30, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %74 = arith.extf %73 : tensor<1024xbf16> to tensor<1024xf32>
+    %75 = arith.subf %cst_6, %74 : tensor<1024xf32>
+    %76 = arith.select %30, %75, %cst_6 : tensor<1024xi1>, tensor<1024xf32>
+    %77 = arith.addi %5, %cst_0 : tensor<1024xi32>
+    %78 = arith.addi %77, %16 : tensor<1024xi32>
+    %79 = arith.addi %78, %18 : tensor<1024xi32>
+    %80 = tt.addptr %20, %79 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %81 = tt.load %80, %41, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %82 = arith.extf %81 : tensor<1024xbf16> to tensor<1024xf32>
+    %83 = arith.select %41, %82, %cst_6 : tensor<1024xi1>, tensor<1024xf32>
+    %84 = arith.select %29, %76, %83 : tensor<1024xi1>, tensor<1024xf32>
+    %85 = arith.mulf %84, %54 : tensor<1024xf32>
+    %86 = arith.addf %68, %85 : tensor<1024xf32>
+    %87 = tt.load %65, %57, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<1024xbf16>
+    %88 = arith.extf %87 : tensor<1024xbf16> to tensor<1024xf32>
+    %89 = arith.select %57, %88, %cst_6 : tensor<1024xi1>, tensor<1024xf32>
+    %90 = arith.select %11, %86, %89 : tensor<1024xi1>, tensor<1024xf32>
+    %91 = tt.splat %arg3 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %92 = tt.addptr %91, %4 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %93 = arith.truncf %61 : tensor<1024xf32> to tensor<1024xbf16>
+    tt.store %92, %93 {cache = 1 : i32, evict = 1 : i32} : tensor<1024xbf16>
+    %94 = tt.splat %arg4 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %95 = tt.addptr %94, %4 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi32>
+    %96 = arith.truncf %90 : tensor<1024xf32> to tensor<1024xbf16>
+    tt.store %95, %96 {cache = 1 : i32, evict = 1 : i32} : tensor<1024xbf16>
+    tt.return
+  }
+}

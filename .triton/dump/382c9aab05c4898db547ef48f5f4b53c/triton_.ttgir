@@ -1,0 +1,28 @@
+#blocked = #triton_gpu.blocked<{sizePerThread = [1], threadsPerWarp = [32], warpsPerCTA = [4], order = [0], CTAsPerCGA = [1], CTASplitNum = [1], CTAOrder = [0]}>
+module attributes {"triton_gpu.compute-capability" = 89 : i32, "triton_gpu.num-ctas" = 1 : i32, "triton_gpu.num-warps" = 4 : i32, "triton_gpu.threads-per-warp" = 32 : i32} {
+  tt.func public @triton__0d1d2de(%arg0: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg2: i32 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}) attributes {noinline = false} {
+    %cst = arith.constant dense<0.000000e+00> : tensor<128xbf16, #blocked>
+    %cst_0 = arith.constant dense<0.000000e+00> : tensor<128xf32, #blocked>
+    %cst_1 = arith.constant dense<4> : tensor<128xi64, #blocked>
+    %cst_2 = arith.constant dense<2304> : tensor<128xi32, #blocked>
+    %c128_i32 = arith.constant 128 : i32
+    %0 = tt.get_program_id x : i32
+    %1 = arith.muli %0, %c128_i32 : i32
+    %2 = tt.make_range {end = 128 : i32, start = 0 : i32} : tensor<128xi32, #blocked>
+    %3 = tt.splat %1 : (i32) -> tensor<128xi32, #blocked>
+    %4 = arith.addi %3, %2 : tensor<128xi32, #blocked>
+    %5 = arith.divsi %4, %cst_2 : tensor<128xi32, #blocked>
+    %6 = arith.extsi %5 : tensor<128xi32, #blocked> to tensor<128xi64, #blocked>
+    %7 = arith.cmpi slt, %6, %cst_1 : tensor<128xi64, #blocked>
+    %8 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<128x!tt.ptr<bf16, 1>, #blocked>
+    %9 = tt.addptr %8, %4 : tensor<128x!tt.ptr<bf16, 1>, #blocked>, tensor<128xi32, #blocked>
+    %10 = tt.load %9, %7, %cst {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<128xbf16, #blocked>
+    %11 = arith.extf %10 : tensor<128xbf16, #blocked> to tensor<128xf32, #blocked>
+    %12 = arith.select %7, %11, %cst_0 : tensor<128xi1, #blocked>, tensor<128xf32, #blocked>
+    %13 = tt.splat %arg1 : (!tt.ptr<bf16, 1>) -> tensor<128x!tt.ptr<bf16, 1>, #blocked>
+    %14 = tt.addptr %13, %4 : tensor<128x!tt.ptr<bf16, 1>, #blocked>, tensor<128xi32, #blocked>
+    %15 = arith.truncf %12 : tensor<128xf32, #blocked> to tensor<128xbf16, #blocked>
+    tt.store %14, %15 {cache = 1 : i32, evict = 1 : i32} : tensor<128xbf16, #blocked>
+    tt.return
+  }
+}

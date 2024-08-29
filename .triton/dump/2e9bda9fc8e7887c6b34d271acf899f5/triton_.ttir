@@ -1,0 +1,21 @@
+module {
+  tt.func public @triton__0d1de(%arg0: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg1: i32 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}) attributes {noinline = false} {
+    %cst = arith.constant dense<3.000000e+01> : tensor<512xf32>
+    %c512_i32 = arith.constant 512 : i32
+    %0 = tt.get_program_id x : i32
+    %1 = arith.muli %0, %c512_i32 : i32
+    %2 = tt.make_range {end = 512 : i32, start = 0 : i32} : tensor<512xi32>
+    %3 = tt.splat %1 : (i32) -> tensor<512xi32>
+    %4 = arith.addi %3, %2 : tensor<512xi32>
+    %5 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<512x!tt.ptr<bf16, 1>>
+    %6 = tt.addptr %5, %4 : tensor<512x!tt.ptr<bf16, 1>>, tensor<512xi32>
+    %7 = tt.load %6 {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<512xbf16>
+    %8 = arith.extf %7 : tensor<512xbf16> to tensor<512xf32>
+    %9 = arith.divf %8, %cst : tensor<512xf32>
+    %10 = tt.extern_elementwise %9 {libname = "libdevice", libpath = "/home/zeus/miniconda3/envs/cloudspace/lib/python3.10/site-packages/triton/language/../third_party/cuda/lib/libdevice.10.bc", pure = true, symbol = "__nv_tanhf"} : (tensor<512xf32>) -> tensor<512xf32>
+    %11 = arith.mulf %10, %cst : tensor<512xf32>
+    %12 = arith.truncf %11 : tensor<512xf32> to tensor<512xbf16>
+    tt.store %6, %12 {cache = 1 : i32, evict = 1 : i32} : tensor<512xbf16>
+    tt.return
+  }
+}

@@ -1,0 +1,39 @@
+module {
+  tt.func public @triton__0d1d2de(%arg0: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg2: i64 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}) attributes {noinline = false} {
+    %cst = arith.constant dense<33554432> : tensor<512xi64>
+    %cst_0 = arith.constant dense<2097152> : tensor<512xi64>
+    %cst_1 = arith.constant dense<256> : tensor<512xi64>
+    %cst_2 = arith.constant dense<8192> : tensor<512xi64>
+    %cst_3 = arith.constant dense<4096> : tensor<512xi64>
+    %cst_4 = arith.constant dense<16> : tensor<512xi64>
+    %c512_i64 = arith.constant 512 : i64
+    %0 = tt.get_program_id x : i32
+    %1 = arith.extsi %0 : i32 to i64
+    %2 = arith.muli %1, %c512_i64 : i64
+    %3 = tt.make_range {end = 512 : i32, start = 0 : i32} : tensor<512xi32>
+    %4 = arith.extsi %3 : tensor<512xi32> to tensor<512xi64>
+    %5 = tt.splat %2 : (i64) -> tensor<512xi64>
+    %6 = arith.addi %5, %4 : tensor<512xi64>
+    %7 = arith.remsi %6, %cst_1 : tensor<512xi64>
+    %8 = arith.divsi %6, %cst_1 : tensor<512xi64>
+    %9 = arith.remsi %8, %cst_4 : tensor<512xi64>
+    %10 = arith.divsi %6, %cst_3 : tensor<512xi64>
+    %11 = arith.remsi %10, %cst_2 : tensor<512xi64>
+    %12 = arith.divsi %6, %cst : tensor<512xi64>
+    %13 = arith.muli %11, %cst_1 : tensor<512xi64>
+    %14 = arith.addi %7, %13 : tensor<512xi64>
+    %15 = arith.muli %9, %cst_0 : tensor<512xi64>
+    %16 = arith.addi %14, %15 : tensor<512xi64>
+    %17 = arith.muli %12, %cst : tensor<512xi64>
+    %18 = arith.addi %16, %17 : tensor<512xi64>
+    %19 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<512x!tt.ptr<bf16, 1>>
+    %20 = tt.addptr %19, %18 : tensor<512x!tt.ptr<bf16, 1>>, tensor<512xi64>
+    %21 = tt.load %20 {cache = 1 : i32, evict = 1 : i32, isVolatile = false} : tensor<512xbf16>
+    %22 = arith.extf %21 : tensor<512xbf16> to tensor<512xf32>
+    %23 = tt.splat %arg1 : (!tt.ptr<bf16, 1>) -> tensor<512x!tt.ptr<bf16, 1>>
+    %24 = tt.addptr %23, %6 : tensor<512x!tt.ptr<bf16, 1>>, tensor<512xi64>
+    %25 = arith.truncf %22 : tensor<512xf32> to tensor<512xbf16>
+    tt.store %24, %25 {cache = 1 : i32, evict = 1 : i32} : tensor<512xbf16>
+    tt.return
+  }
+}

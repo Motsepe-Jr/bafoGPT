@@ -1,0 +1,42 @@
+module {
+  tt.func public @triton__0d1d2de(%arg0: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg2: i64 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}) attributes {noinline = false} {
+    %cst = arith.constant dense<67108864> : tensor<1024xi64>
+    %cst_0 = arith.constant dense<8192> : tensor<1024xi64>
+    %cst_1 = arith.constant dense<1024> : tensor<1024xi64>
+    %cst_2 = arith.constant dense<768> : tensor<1024xi64>
+    %cst_3 = arith.constant dense<33554432> : tensor<1024xi64>
+    %cst_4 = arith.constant dense<8> : tensor<1024xi64>
+    %cst_5 = arith.constant dense<4194304> : tensor<1024xi64>
+    %cst_6 = arith.constant dense<256> : tensor<1024xi64>
+    %c1024_i64 = arith.constant 1024 : i64
+    %0 = tt.get_program_id x : i32
+    %1 = arith.extsi %0 : i32 to i64
+    %2 = arith.muli %1, %c1024_i64 : i64
+    %3 = tt.make_range {end = 1024 : i32, start = 0 : i32} : tensor<1024xi32>
+    %4 = arith.extsi %3 : tensor<1024xi32> to tensor<1024xi64>
+    %5 = tt.splat %2 : (i64) -> tensor<1024xi64>
+    %6 = arith.addi %5, %4 : tensor<1024xi64>
+    %7 = arith.remsi %6, %cst_6 : tensor<1024xi64>
+    %8 = arith.divsi %6, %cst_6 : tensor<1024xi64>
+    %9 = arith.remsi %8, %cst_0 : tensor<1024xi64>
+    %10 = arith.divsi %6, %cst_5 : tensor<1024xi64>
+    %11 = arith.remsi %10, %cst_4 : tensor<1024xi64>
+    %12 = arith.divsi %6, %cst_3 : tensor<1024xi64>
+    %13 = arith.addi %7, %cst_2 : tensor<1024xi64>
+    %14 = arith.muli %11, %cst_1 : tensor<1024xi64>
+    %15 = arith.addi %13, %14 : tensor<1024xi64>
+    %16 = arith.muli %9, %cst_0 : tensor<1024xi64>
+    %17 = arith.addi %15, %16 : tensor<1024xi64>
+    %18 = arith.muli %12, %cst : tensor<1024xi64>
+    %19 = arith.addi %17, %18 : tensor<1024xi64>
+    %20 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %21 = tt.addptr %20, %19 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi64>
+    %22 = tt.load %21 {cache = 1 : i32, evict = 3 : i32, isVolatile = false} : tensor<1024xbf16>
+    %23 = arith.extf %22 : tensor<1024xbf16> to tensor<1024xf32>
+    %24 = tt.splat %arg1 : (!tt.ptr<bf16, 1>) -> tensor<1024x!tt.ptr<bf16, 1>>
+    %25 = tt.addptr %24, %6 : tensor<1024x!tt.ptr<bf16, 1>>, tensor<1024xi64>
+    %26 = arith.truncf %23 : tensor<1024xf32> to tensor<1024xbf16>
+    tt.store %25, %26 {cache = 1 : i32, evict = 1 : i32} : tensor<1024xbf16>
+    tt.return
+  }
+}

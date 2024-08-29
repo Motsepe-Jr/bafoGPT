@@ -1,0 +1,125 @@
+module {
+  tt.func public @triton__0d1d2d3d4d5d6d7d8de9de(%arg0: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f32, 1> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<i64, 1> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<f32, 1> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<f32, 1> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<f32, 1> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<bf16, 1> {tt.divisibility = 16 : i32}, %arg8: i32 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}, %arg9: i32 {tt.divisibility = 16 : i32, tt.max_divisibility = 16 : i32}) attributes {noinline = false} {
+    %cst = arith.constant dense<0.000000e+00> : tensor<1x1024xbf16>
+    %c3584_i32 = arith.constant 3584 : i32
+    %c1024_i32 = arith.constant 1024 : i32
+    %c0_i32 = arith.constant 0 : i32
+    %cst_0 = arith.constant dense<3584> : tensor<1x1xi64>
+    %cst_1 = arith.constant dense<0> : tensor<1x1xi64>
+    %cst_2 = arith.constant dense<288256> : tensor<1x1xi64>
+    %cst_3 = arith.constant dense<59.8665199> : tensor<1x1024xf32>
+    %cst_4 = arith.constant dense<1.000000e+00> : tensor<1x1024xf32>
+    %cst_5 = arith.constant dense<9.99999974E-6> : tensor<1x1xf32>
+    %cst_6 = arith.constant dense<3.584000e+03> : tensor<1x1xf32>
+    %cst_7 = arith.constant dense<3584> : tensor<1x1024xi32>
+    %cst_8 = arith.constant dense<0.000000e+00> : tensor<1x1024xf32>
+    %0 = tt.get_program_id x : i32
+    %1 = tt.make_range {end = 1024 : i32, start = 0 : i32} : tensor<1024xi32>
+    %2 = tt.expand_dims %1 {axis = 0 : i32} : (tensor<1024xi32>) -> tensor<1x1024xi32>
+    %3 = arith.muli %0, %c3584_i32 : i32
+    %4 = tt.splat %3 : (i32) -> tensor<1x1024xi32>
+    %5 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<1x1024x!tt.ptr<bf16, 1>>
+    %6 = scf.for %arg10 = %c0_i32 to %c3584_i32 step %c1024_i32 iter_args(%arg11 = %cst_8) -> (tensor<1x1024xf32>)  : i32 {
+      %39 = tt.splat %arg10 : (i32) -> tensor<1x1024xi32>
+      %40 = arith.addi %39, %2 : tensor<1x1024xi32>
+      %41 = arith.cmpi slt, %40, %cst_7 : tensor<1x1024xi32>
+      %42 = arith.addi %40, %4 : tensor<1x1024xi32>
+      %43 = tt.addptr %5, %42 : tensor<1x1024x!tt.ptr<bf16, 1>>, tensor<1x1024xi32>
+      %44 = tt.load %43, %41, %cst {cache = 1 : i32, evict = 3 : i32, isVolatile = false} : tensor<1x1024xbf16>
+      %45 = arith.extf %44 : tensor<1x1024xbf16> to tensor<1x1024xf32>
+      %46 = arith.mulf %45, %45 : tensor<1x1024xf32>
+      %47 = arith.addf %arg11, %46 : tensor<1x1024xf32>
+      %48 = arith.select %41, %47, %arg11 : tensor<1x1024xi1>, tensor<1x1024xf32>
+      scf.yield %48 : tensor<1x1024xf32>
+    }
+    %7 = "tt.reduce"(%6) <{axis = 1 : i32}> ({
+    ^bb0(%arg10: f32, %arg11: f32):
+      %39 = arith.addf %arg10, %arg11 : f32
+      tt.reduce.return %39 : f32
+    }) : (tensor<1x1024xf32>) -> tensor<1xf32>
+    %8 = tt.expand_dims %7 {axis = 1 : i32} : (tensor<1xf32>) -> tensor<1x1xf32>
+    %9 = tt.addptr %arg2, %0 : !tt.ptr<i64, 1>, i32
+    %10 = tt.splat %9 : (!tt.ptr<i64, 1>) -> tensor<1x1x!tt.ptr<i64, 1>>
+    %11 = tt.load %10 {cache = 1 : i32, evict = 3 : i32, isVolatile = false} : tensor<1x1xi64>
+    %12 = arith.muli %0, %c3584_i32 : i32
+    %13 = tt.splat %12 : (i32) -> tensor<1x1024xi32>
+    %14 = tt.splat %arg0 : (!tt.ptr<bf16, 1>) -> tensor<1x1024x!tt.ptr<bf16, 1>>
+    %15 = tt.splat %arg1 : (!tt.ptr<f32, 1>) -> tensor<1x1024x!tt.ptr<f32, 1>>
+    %16 = arith.divf %8, %cst_6 : tensor<1x1xf32>
+    %17 = arith.addf %16, %cst_5 : tensor<1x1xf32>
+    %18 = arith.addi %11, %cst_2 : tensor<1x1xi64>
+    %19 = arith.cmpi slt, %11, %cst_1 : tensor<1x1xi64>
+    %20 = arith.select %19, %18, %11 : tensor<1x1xi1>, tensor<1x1xi64>
+    %21 = arith.cmpi sge, %20, %cst_1 : tensor<1x1xi64>
+    %22 = arith.cmpi slt, %20, %cst_2 : tensor<1x1xi64>
+    %23 = arith.andi %21, %22 : tensor<1x1xi1>
+    %24 = arith.muli %20, %cst_0 : tensor<1x1xi64>
+    %25 = tt.broadcast %24 : (tensor<1x1xi64>) -> tensor<1x1024xi64>
+    %26 = tt.splat %arg3 : (!tt.ptr<f32, 1>) -> tensor<1x1024x!tt.ptr<f32, 1>>
+    %27 = tt.splat %arg5 : (!tt.ptr<f32, 1>) -> tensor<1x1024x!tt.ptr<f32, 1>>
+    %28 = scf.for %arg10 = %c0_i32 to %c3584_i32 step %c1024_i32 iter_args(%arg11 = %cst_8) -> (tensor<1x1024xf32>)  : i32 {
+      %39 = tt.splat %arg10 : (i32) -> tensor<1x1024xi32>
+      %40 = arith.addi %39, %2 : tensor<1x1024xi32>
+      %41 = arith.cmpi slt, %40, %cst_7 : tensor<1x1024xi32>
+      %42 = arith.addi %40, %13 : tensor<1x1024xi32>
+      %43 = tt.addptr %14, %42 : tensor<1x1024x!tt.ptr<bf16, 1>>, tensor<1x1024xi32>
+      %44 = tt.load %43, %41, %cst {cache = 1 : i32, evict = 2 : i32, isVolatile = false} : tensor<1x1024xbf16>
+      %45 = arith.extf %44 : tensor<1x1024xbf16> to tensor<1x1024xf32>
+      %46 = tt.addptr %15, %40 : tensor<1x1024x!tt.ptr<f32, 1>>, tensor<1x1024xi32>
+      %47 = tt.load %46, %41, %cst_8 {cache = 1 : i32, evict = 3 : i32, isVolatile = false} : tensor<1x1024xf32>
+      %48 = tt.extern_elementwise %17 {libname = "libdevice", libpath = "/home/zeus/miniconda3/envs/cloudspace/lib/python3.10/site-packages/triton/language/../third_party/cuda/lib/libdevice.10.bc", pure = true, symbol = "__nv_rsqrtf"} : (tensor<1x1xf32>) -> tensor<1x1xf32>
+      %49 = tt.broadcast %48 : (tensor<1x1xf32>) -> tensor<1x1024xf32>
+      %50 = arith.mulf %45, %49 : tensor<1x1024xf32>
+      %51 = arith.addf %47, %cst_4 : tensor<1x1024xf32>
+      %52 = arith.mulf %50, %51 : tensor<1x1024xf32>
+      tt.assert %23, "index out of bounds: 0 <= tmp23 < 288256", "/home/zeus/miniconda3/envs/cloudspace/lib/python3.10/site-packages/torch/_inductor/codecache.py", "<module>", 1892 : tensor<1x1xi1>
+      %53 = arith.extsi %40 : tensor<1x1024xi32> to tensor<1x1024xi64>
+      %54 = arith.addi %53, %25 : tensor<1x1024xi64>
+      %55 = tt.addptr %26, %54 : tensor<1x1024x!tt.ptr<f32, 1>>, tensor<1x1024xi64>
+      %56 = tt.load %55, %41, %cst_8 {cache = 1 : i32, evict = 2 : i32, isVolatile = false} : tensor<1x1024xf32>
+      %57 = arith.mulf %56, %cst_3 : tensor<1x1024xf32>
+      %58 = arith.addf %52, %57 : tensor<1x1024xf32>
+      %59 = arith.mulf %58, %58 : tensor<1x1024xf32>
+      %60 = arith.addf %arg11, %59 : tensor<1x1024xf32>
+      %61 = arith.select %41, %60, %arg11 : tensor<1x1024xi1>, tensor<1x1024xf32>
+      %62 = tt.addptr %27, %42 : tensor<1x1024x!tt.ptr<f32, 1>>, tensor<1x1024xi32>
+      tt.store %62, %58, %41 {cache = 1 : i32, evict = 1 : i32} : tensor<1x1024xf32>
+      scf.yield %61 : tensor<1x1024xf32>
+    }
+    %29 = "tt.reduce"(%28) <{axis = 1 : i32}> ({
+    ^bb0(%arg10: f32, %arg11: f32):
+      %39 = arith.addf %arg10, %arg11 : f32
+      tt.reduce.return %39 : f32
+    }) : (tensor<1x1024xf32>) -> tensor<1xf32>
+    %30 = tt.expand_dims %29 {axis = 1 : i32} : (tensor<1xf32>) -> tensor<1x1xf32>
+    %31 = arith.muli %0, %c3584_i32 : i32
+    %32 = tt.splat %31 : (i32) -> tensor<1x1024xi32>
+    %33 = tt.splat %arg5 : (!tt.ptr<f32, 1>) -> tensor<1x1024x!tt.ptr<f32, 1>>
+    %34 = tt.splat %arg4 : (!tt.ptr<f32, 1>) -> tensor<1x1024x!tt.ptr<f32, 1>>
+    %35 = arith.divf %30, %cst_6 : tensor<1x1xf32>
+    %36 = arith.addf %35, %cst_5 : tensor<1x1xf32>
+    %37 = tt.splat %arg6 : (!tt.ptr<bf16, 1>) -> tensor<1x1024x!tt.ptr<bf16, 1>>
+    %38 = tt.splat %arg7 : (!tt.ptr<bf16, 1>) -> tensor<1x1024x!tt.ptr<bf16, 1>>
+    scf.for %arg10 = %c0_i32 to %c3584_i32 step %c1024_i32  : i32 {
+      %39 = tt.splat %arg10 : (i32) -> tensor<1x1024xi32>
+      %40 = arith.addi %39, %2 : tensor<1x1024xi32>
+      %41 = arith.cmpi slt, %40, %cst_7 : tensor<1x1024xi32>
+      %42 = arith.addi %40, %32 : tensor<1x1024xi32>
+      %43 = tt.addptr %33, %42 : tensor<1x1024x!tt.ptr<f32, 1>>, tensor<1x1024xi32>
+      %44 = tt.load %43, %41, %cst_8 {cache = 1 : i32, evict = 2 : i32, isVolatile = false} : tensor<1x1024xf32>
+      %45 = tt.addptr %34, %40 : tensor<1x1024x!tt.ptr<f32, 1>>, tensor<1x1024xi32>
+      %46 = tt.load %45, %41, %cst_8 {cache = 1 : i32, evict = 3 : i32, isVolatile = false} : tensor<1x1024xf32>
+      %47 = tt.extern_elementwise %36 {libname = "libdevice", libpath = "/home/zeus/miniconda3/envs/cloudspace/lib/python3.10/site-packages/triton/language/../third_party/cuda/lib/libdevice.10.bc", pure = true, symbol = "__nv_rsqrtf"} : (tensor<1x1xf32>) -> tensor<1x1xf32>
+      %48 = tt.broadcast %47 : (tensor<1x1xf32>) -> tensor<1x1024xf32>
+      %49 = arith.mulf %44, %48 : tensor<1x1024xf32>
+      %50 = arith.addf %46, %cst_4 : tensor<1x1024xf32>
+      %51 = arith.mulf %49, %50 : tensor<1x1024xf32>
+      %52 = tt.addptr %37, %42 : tensor<1x1024x!tt.ptr<bf16, 1>>, tensor<1x1024xi32>
+      %53 = arith.truncf %51 : tensor<1x1024xf32> to tensor<1x1024xbf16>
+      tt.store %52, %53, %41 {cache = 1 : i32, evict = 1 : i32} : tensor<1x1024xbf16>
+      %54 = tt.addptr %38, %42 : tensor<1x1024x!tt.ptr<bf16, 1>>, tensor<1x1024xi32>
+      tt.store %54, %53, %41 {cache = 1 : i32, evict = 1 : i32} : tensor<1x1024xbf16>
+    }
+    tt.return
+  }
+}

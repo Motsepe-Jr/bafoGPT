@@ -1,0 +1,664 @@
+; ModuleID = 'LLVMDialectModule'
+source_filename = "LLVMDialectModule"
+
+@.str = private unnamed_addr constant [11 x i8] c"__CUDA_FTZ\00", align 1
+
+define void @triton__0d1d2de(ptr addrspace(1) %0, ptr addrspace(1) %1, i32 %2) local_unnamed_addr !dbg !7 {
+  %4 = tail call i32 @llvm.nvvm.read.ptx.sreg.tid.x(), !dbg !10
+  %5 = shl i32 %4, 3, !dbg !10
+  %6 = and i32 %5, 1016, !dbg !10
+  %7 = tail call i32 asm "mov.u32 $0, %ctaid.x;", "=r"() #4, !dbg !11
+  %8 = shl i32 %7, 10, !dbg !12
+  %9 = or i32 %8, %6, !dbg !13
+  %10 = sext i32 %9 to i64, !dbg !14
+  %11 = getelementptr i16, ptr addrspace(1) %0, i64 %10, !dbg !14
+  %12 = tail call { i32, i32, i32, i32 } asm sideeffect "mov.u32 $0, 0x0;\0A\09mov.u32 $1, 0x0;\0A\09mov.u32 $2, 0x0;\0A\09mov.u32 $3, 0x0;\0A\09@$5 ld.global.v4.b32 { $0, $1, $2, $3 }, [ $4 + 0 ];", "=r,=r,=r,=r,l,b"(ptr addrspace(1) %11, i1 true) #4, !dbg !15
+  %13 = extractvalue { i32, i32, i32, i32 } %12, 0, !dbg !15
+  %14 = extractvalue { i32, i32, i32, i32 } %12, 1, !dbg !15
+  %15 = extractvalue { i32, i32, i32, i32 } %12, 2, !dbg !15
+  %16 = extractvalue { i32, i32, i32, i32 } %12, 3, !dbg !15
+  %17 = trunc i32 %13 to i16, !dbg !15
+  %extelt.offset = lshr i32 %13, 16, !dbg !15
+  %18 = trunc i32 %extelt.offset to i16, !dbg !15
+  %19 = trunc i32 %14 to i16, !dbg !15
+  %extelt.offset1 = lshr i32 %14, 16, !dbg !15
+  %20 = trunc i32 %extelt.offset1 to i16, !dbg !15
+  %21 = trunc i32 %15 to i16, !dbg !15
+  %extelt.offset2 = lshr i32 %15, 16, !dbg !15
+  %22 = trunc i32 %extelt.offset2 to i16, !dbg !15
+  %23 = trunc i32 %16 to i16, !dbg !15
+  %extelt.offset3 = lshr i32 %16, 16, !dbg !15
+  %24 = trunc i32 %extelt.offset3 to i16, !dbg !15
+  %25 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %17) #4, !dbg !16
+  %26 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %18) #4, !dbg !16
+  %27 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %19) #4, !dbg !16
+  %28 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %20) #4, !dbg !16
+  %29 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %21) #4, !dbg !16
+  %30 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %22) #4, !dbg !16
+  %31 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %23) #4, !dbg !16
+  %32 = tail call float asm "cvt.f32.bf16 $0, $1;", "=r,h"(i16 %24) #4, !dbg !16
+  %33 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %25, float 3.000000e+01) #4, !dbg !17
+  %34 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %26, float 3.000000e+01) #4, !dbg !17
+  %35 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %27, float 3.000000e+01) #4, !dbg !17
+  %36 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %28, float 3.000000e+01) #4, !dbg !17
+  %37 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %29, float 3.000000e+01) #4, !dbg !17
+  %38 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %30, float 3.000000e+01) #4, !dbg !17
+  %39 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %31, float 3.000000e+01) #4, !dbg !17
+  %40 = tail call float asm "div.full.f32 $0, $1, $2;", "=r,r,r"(float %32, float 3.000000e+01) #4, !dbg !17
+  %41 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i = icmp eq i32 %41, 0, !dbg !18
+  %42 = tail call float @llvm.nvvm.fabs.ftz.f(float %33) #4, !dbg !18
+  %43 = tail call float @llvm.nvvm.fabs.f(float %33) #4, !dbg !18
+  %.01.i = select i1 %.not.i, float %43, float %42, !dbg !18
+  %44 = fcmp ult float %.01.i, 0x3FE3333340000000, !dbg !18
+  br i1 %44, label %__internal_fmad.exit3.i, label %__internal_fmad.exit1.i, !dbg !18
+
+__internal_fmad.exit1.i:                          ; preds = %3
+  %45 = fmul float %.01.i, 0x4007154760000000, !dbg !18
+  %46 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %45) #4, !dbg !18
+  %47 = fadd float %46, 1.000000e+00, !dbg !18
+  %48 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %47) #5, !dbg !18, !srcloc !19
+  %49 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i = icmp eq i32 %49, 0, !dbg !18
+  %50 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %48, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %51 = tail call float @llvm.nvvm.fma.rn.f(float %48, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i = select i1 %.not6.i, float %51, float %50, !dbg !18
+  %52 = fcmp oge float %.01.i, 0x4022059680000000, !dbg !18
+  %s.0.i = select i1 %52, float 1.000000e+00, float %.03.i, !dbg !18
+  %53 = bitcast float %s.0.i to i32, !dbg !18
+  %54 = bitcast float %33 to i32, !dbg !18
+  %55 = and i32 %54, -2147483648, !dbg !18
+  %56 = or i32 %55, %53, !dbg !18
+  %57 = bitcast i32 %56 to float, !dbg !18
+  br label %__nv_tanhf.exit, !dbg !18
+
+__internal_fmad.exit3.i:                          ; preds = %3
+  %58 = fmul float %33, %33, !dbg !18
+  %59 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i = icmp eq i32 %59, 0, !dbg !18
+  %60 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %58, float 0xBFAAC795C0000000) #4, !dbg !18
+  %61 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %58, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i = select i1 %.not1.i, float %61, float %60, !dbg !18
+  %62 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i = icmp eq i32 %62, 0, !dbg !18
+  %63 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i, float %58, float 0x3FC10B2820000000) #4, !dbg !18
+  %64 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i, float %58, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i = select i1 %.not2.i, float %64, float %63, !dbg !18
+  %65 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i = icmp eq i32 %65, 0, !dbg !18
+  %66 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i, float %58, float 0xBFD5553DA0000000) #4, !dbg !18
+  %67 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i, float %58, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i = select i1 %.not3.i, float %67, float %66, !dbg !18
+  %68 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i = icmp eq i32 %68, 0, !dbg !18
+  %69 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i, float %58, float 0.000000e+00) #4, !dbg !18
+  %70 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i, float %58, float 0.000000e+00) #4, !dbg !18
+  %.04.i = select i1 %.not4.i, float %70, float %69, !dbg !18
+  %71 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i = icmp eq i32 %71, 0, !dbg !18
+  %72 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i, float %33, float %33) #4, !dbg !18
+  %73 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i, float %33, float %33) #4, !dbg !18
+  %.02.i = select i1 %.not5.i, float %73, float %72, !dbg !18
+  br label %__nv_tanhf.exit, !dbg !18
+
+__nv_tanhf.exit:                                  ; preds = %__internal_fmad.exit1.i, %__internal_fmad.exit3.i
+  %s.1.i = phi float [ %57, %__internal_fmad.exit1.i ], [ %.02.i, %__internal_fmad.exit3.i ], !dbg !18
+  %74 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i4 = icmp eq i32 %74, 0, !dbg !18
+  %75 = tail call float @llvm.nvvm.fabs.ftz.f(float %34) #4, !dbg !18
+  %76 = tail call float @llvm.nvvm.fabs.f(float %34) #4, !dbg !18
+  %.01.i5 = select i1 %.not.i4, float %76, float %75, !dbg !18
+  %77 = fcmp ult float %.01.i5, 0x3FE3333340000000, !dbg !18
+  br i1 %77, label %__internal_fmad.exit3.i11, label %__internal_fmad.exit1.i6, !dbg !18
+
+__internal_fmad.exit1.i6:                         ; preds = %__nv_tanhf.exit
+  %78 = fmul float %.01.i5, 0x4007154760000000, !dbg !18
+  %79 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %78) #4, !dbg !18
+  %80 = fadd float %79, 1.000000e+00, !dbg !18
+  %81 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %80) #5, !dbg !18, !srcloc !19
+  %82 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i7 = icmp eq i32 %82, 0, !dbg !18
+  %83 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %81, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %84 = tail call float @llvm.nvvm.fma.rn.f(float %81, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i8 = select i1 %.not6.i7, float %84, float %83, !dbg !18
+  %85 = fcmp oge float %.01.i5, 0x4022059680000000, !dbg !18
+  %s.0.i9 = select i1 %85, float 1.000000e+00, float %.03.i8, !dbg !18
+  %86 = bitcast float %s.0.i9 to i32, !dbg !18
+  %87 = bitcast float %34 to i32, !dbg !18
+  %88 = and i32 %87, -2147483648, !dbg !18
+  %89 = or i32 %88, %86, !dbg !18
+  %90 = bitcast i32 %89 to float, !dbg !18
+  br label %__nv_tanhf.exit22, !dbg !18
+
+__internal_fmad.exit3.i11:                        ; preds = %__nv_tanhf.exit
+  %91 = fmul float %34, %34, !dbg !18
+  %92 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i12 = icmp eq i32 %92, 0, !dbg !18
+  %93 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %91, float 0xBFAAC795C0000000) #4, !dbg !18
+  %94 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %91, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i13 = select i1 %.not1.i12, float %94, float %93, !dbg !18
+  %95 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i14 = icmp eq i32 %95, 0, !dbg !18
+  %96 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i13, float %91, float 0x3FC10B2820000000) #4, !dbg !18
+  %97 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i13, float %91, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i15 = select i1 %.not2.i14, float %97, float %96, !dbg !18
+  %98 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i16 = icmp eq i32 %98, 0, !dbg !18
+  %99 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i15, float %91, float 0xBFD5553DA0000000) #4, !dbg !18
+  %100 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i15, float %91, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i17 = select i1 %.not3.i16, float %100, float %99, !dbg !18
+  %101 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i18 = icmp eq i32 %101, 0, !dbg !18
+  %102 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i17, float %91, float 0.000000e+00) #4, !dbg !18
+  %103 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i17, float %91, float 0.000000e+00) #4, !dbg !18
+  %.04.i19 = select i1 %.not4.i18, float %103, float %102, !dbg !18
+  %104 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i20 = icmp eq i32 %104, 0, !dbg !18
+  %105 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i19, float %34, float %34) #4, !dbg !18
+  %106 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i19, float %34, float %34) #4, !dbg !18
+  %.02.i21 = select i1 %.not5.i20, float %106, float %105, !dbg !18
+  br label %__nv_tanhf.exit22, !dbg !18
+
+__nv_tanhf.exit22:                                ; preds = %__internal_fmad.exit1.i6, %__internal_fmad.exit3.i11
+  %s.1.i10 = phi float [ %90, %__internal_fmad.exit1.i6 ], [ %.02.i21, %__internal_fmad.exit3.i11 ], !dbg !18
+  %107 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i23 = icmp eq i32 %107, 0, !dbg !18
+  %108 = tail call float @llvm.nvvm.fabs.ftz.f(float %35) #4, !dbg !18
+  %109 = tail call float @llvm.nvvm.fabs.f(float %35) #4, !dbg !18
+  %.01.i24 = select i1 %.not.i23, float %109, float %108, !dbg !18
+  %110 = fcmp ult float %.01.i24, 0x3FE3333340000000, !dbg !18
+  br i1 %110, label %__internal_fmad.exit3.i30, label %__internal_fmad.exit1.i25, !dbg !18
+
+__internal_fmad.exit1.i25:                        ; preds = %__nv_tanhf.exit22
+  %111 = fmul float %.01.i24, 0x4007154760000000, !dbg !18
+  %112 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %111) #4, !dbg !18
+  %113 = fadd float %112, 1.000000e+00, !dbg !18
+  %114 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %113) #5, !dbg !18, !srcloc !19
+  %115 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i26 = icmp eq i32 %115, 0, !dbg !18
+  %116 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %114, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %117 = tail call float @llvm.nvvm.fma.rn.f(float %114, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i27 = select i1 %.not6.i26, float %117, float %116, !dbg !18
+  %118 = fcmp oge float %.01.i24, 0x4022059680000000, !dbg !18
+  %s.0.i28 = select i1 %118, float 1.000000e+00, float %.03.i27, !dbg !18
+  %119 = bitcast float %s.0.i28 to i32, !dbg !18
+  %120 = bitcast float %35 to i32, !dbg !18
+  %121 = and i32 %120, -2147483648, !dbg !18
+  %122 = or i32 %121, %119, !dbg !18
+  %123 = bitcast i32 %122 to float, !dbg !18
+  br label %__nv_tanhf.exit41, !dbg !18
+
+__internal_fmad.exit3.i30:                        ; preds = %__nv_tanhf.exit22
+  %124 = fmul float %35, %35, !dbg !18
+  %125 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i31 = icmp eq i32 %125, 0, !dbg !18
+  %126 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %124, float 0xBFAAC795C0000000) #4, !dbg !18
+  %127 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %124, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i32 = select i1 %.not1.i31, float %127, float %126, !dbg !18
+  %128 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i33 = icmp eq i32 %128, 0, !dbg !18
+  %129 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i32, float %124, float 0x3FC10B2820000000) #4, !dbg !18
+  %130 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i32, float %124, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i34 = select i1 %.not2.i33, float %130, float %129, !dbg !18
+  %131 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i35 = icmp eq i32 %131, 0, !dbg !18
+  %132 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i34, float %124, float 0xBFD5553DA0000000) #4, !dbg !18
+  %133 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i34, float %124, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i36 = select i1 %.not3.i35, float %133, float %132, !dbg !18
+  %134 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i37 = icmp eq i32 %134, 0, !dbg !18
+  %135 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i36, float %124, float 0.000000e+00) #4, !dbg !18
+  %136 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i36, float %124, float 0.000000e+00) #4, !dbg !18
+  %.04.i38 = select i1 %.not4.i37, float %136, float %135, !dbg !18
+  %137 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i39 = icmp eq i32 %137, 0, !dbg !18
+  %138 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i38, float %35, float %35) #4, !dbg !18
+  %139 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i38, float %35, float %35) #4, !dbg !18
+  %.02.i40 = select i1 %.not5.i39, float %139, float %138, !dbg !18
+  br label %__nv_tanhf.exit41, !dbg !18
+
+__nv_tanhf.exit41:                                ; preds = %__internal_fmad.exit1.i25, %__internal_fmad.exit3.i30
+  %s.1.i29 = phi float [ %123, %__internal_fmad.exit1.i25 ], [ %.02.i40, %__internal_fmad.exit3.i30 ], !dbg !18
+  %140 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i42 = icmp eq i32 %140, 0, !dbg !18
+  %141 = tail call float @llvm.nvvm.fabs.ftz.f(float %36) #4, !dbg !18
+  %142 = tail call float @llvm.nvvm.fabs.f(float %36) #4, !dbg !18
+  %.01.i43 = select i1 %.not.i42, float %142, float %141, !dbg !18
+  %143 = fcmp ult float %.01.i43, 0x3FE3333340000000, !dbg !18
+  br i1 %143, label %__internal_fmad.exit3.i49, label %__internal_fmad.exit1.i44, !dbg !18
+
+__internal_fmad.exit1.i44:                        ; preds = %__nv_tanhf.exit41
+  %144 = fmul float %.01.i43, 0x4007154760000000, !dbg !18
+  %145 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %144) #4, !dbg !18
+  %146 = fadd float %145, 1.000000e+00, !dbg !18
+  %147 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %146) #5, !dbg !18, !srcloc !19
+  %148 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i45 = icmp eq i32 %148, 0, !dbg !18
+  %149 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %147, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %150 = tail call float @llvm.nvvm.fma.rn.f(float %147, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i46 = select i1 %.not6.i45, float %150, float %149, !dbg !18
+  %151 = fcmp oge float %.01.i43, 0x4022059680000000, !dbg !18
+  %s.0.i47 = select i1 %151, float 1.000000e+00, float %.03.i46, !dbg !18
+  %152 = bitcast float %s.0.i47 to i32, !dbg !18
+  %153 = bitcast float %36 to i32, !dbg !18
+  %154 = and i32 %153, -2147483648, !dbg !18
+  %155 = or i32 %154, %152, !dbg !18
+  %156 = bitcast i32 %155 to float, !dbg !18
+  br label %__nv_tanhf.exit60, !dbg !18
+
+__internal_fmad.exit3.i49:                        ; preds = %__nv_tanhf.exit41
+  %157 = fmul float %36, %36, !dbg !18
+  %158 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i50 = icmp eq i32 %158, 0, !dbg !18
+  %159 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %157, float 0xBFAAC795C0000000) #4, !dbg !18
+  %160 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %157, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i51 = select i1 %.not1.i50, float %160, float %159, !dbg !18
+  %161 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i52 = icmp eq i32 %161, 0, !dbg !18
+  %162 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i51, float %157, float 0x3FC10B2820000000) #4, !dbg !18
+  %163 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i51, float %157, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i53 = select i1 %.not2.i52, float %163, float %162, !dbg !18
+  %164 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i54 = icmp eq i32 %164, 0, !dbg !18
+  %165 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i53, float %157, float 0xBFD5553DA0000000) #4, !dbg !18
+  %166 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i53, float %157, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i55 = select i1 %.not3.i54, float %166, float %165, !dbg !18
+  %167 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i56 = icmp eq i32 %167, 0, !dbg !18
+  %168 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i55, float %157, float 0.000000e+00) #4, !dbg !18
+  %169 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i55, float %157, float 0.000000e+00) #4, !dbg !18
+  %.04.i57 = select i1 %.not4.i56, float %169, float %168, !dbg !18
+  %170 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i58 = icmp eq i32 %170, 0, !dbg !18
+  %171 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i57, float %36, float %36) #4, !dbg !18
+  %172 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i57, float %36, float %36) #4, !dbg !18
+  %.02.i59 = select i1 %.not5.i58, float %172, float %171, !dbg !18
+  br label %__nv_tanhf.exit60, !dbg !18
+
+__nv_tanhf.exit60:                                ; preds = %__internal_fmad.exit1.i44, %__internal_fmad.exit3.i49
+  %s.1.i48 = phi float [ %156, %__internal_fmad.exit1.i44 ], [ %.02.i59, %__internal_fmad.exit3.i49 ], !dbg !18
+  %173 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i61 = icmp eq i32 %173, 0, !dbg !18
+  %174 = tail call float @llvm.nvvm.fabs.ftz.f(float %37) #4, !dbg !18
+  %175 = tail call float @llvm.nvvm.fabs.f(float %37) #4, !dbg !18
+  %.01.i62 = select i1 %.not.i61, float %175, float %174, !dbg !18
+  %176 = fcmp ult float %.01.i62, 0x3FE3333340000000, !dbg !18
+  br i1 %176, label %__internal_fmad.exit3.i68, label %__internal_fmad.exit1.i63, !dbg !18
+
+__internal_fmad.exit1.i63:                        ; preds = %__nv_tanhf.exit60
+  %177 = fmul float %.01.i62, 0x4007154760000000, !dbg !18
+  %178 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %177) #4, !dbg !18
+  %179 = fadd float %178, 1.000000e+00, !dbg !18
+  %180 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %179) #5, !dbg !18, !srcloc !19
+  %181 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i64 = icmp eq i32 %181, 0, !dbg !18
+  %182 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %180, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %183 = tail call float @llvm.nvvm.fma.rn.f(float %180, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i65 = select i1 %.not6.i64, float %183, float %182, !dbg !18
+  %184 = fcmp oge float %.01.i62, 0x4022059680000000, !dbg !18
+  %s.0.i66 = select i1 %184, float 1.000000e+00, float %.03.i65, !dbg !18
+  %185 = bitcast float %s.0.i66 to i32, !dbg !18
+  %186 = bitcast float %37 to i32, !dbg !18
+  %187 = and i32 %186, -2147483648, !dbg !18
+  %188 = or i32 %187, %185, !dbg !18
+  %189 = bitcast i32 %188 to float, !dbg !18
+  br label %__nv_tanhf.exit79, !dbg !18
+
+__internal_fmad.exit3.i68:                        ; preds = %__nv_tanhf.exit60
+  %190 = fmul float %37, %37, !dbg !18
+  %191 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i69 = icmp eq i32 %191, 0, !dbg !18
+  %192 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %190, float 0xBFAAC795C0000000) #4, !dbg !18
+  %193 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %190, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i70 = select i1 %.not1.i69, float %193, float %192, !dbg !18
+  %194 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i71 = icmp eq i32 %194, 0, !dbg !18
+  %195 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i70, float %190, float 0x3FC10B2820000000) #4, !dbg !18
+  %196 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i70, float %190, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i72 = select i1 %.not2.i71, float %196, float %195, !dbg !18
+  %197 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i73 = icmp eq i32 %197, 0, !dbg !18
+  %198 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i72, float %190, float 0xBFD5553DA0000000) #4, !dbg !18
+  %199 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i72, float %190, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i74 = select i1 %.not3.i73, float %199, float %198, !dbg !18
+  %200 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i75 = icmp eq i32 %200, 0, !dbg !18
+  %201 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i74, float %190, float 0.000000e+00) #4, !dbg !18
+  %202 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i74, float %190, float 0.000000e+00) #4, !dbg !18
+  %.04.i76 = select i1 %.not4.i75, float %202, float %201, !dbg !18
+  %203 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i77 = icmp eq i32 %203, 0, !dbg !18
+  %204 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i76, float %37, float %37) #4, !dbg !18
+  %205 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i76, float %37, float %37) #4, !dbg !18
+  %.02.i78 = select i1 %.not5.i77, float %205, float %204, !dbg !18
+  br label %__nv_tanhf.exit79, !dbg !18
+
+__nv_tanhf.exit79:                                ; preds = %__internal_fmad.exit1.i63, %__internal_fmad.exit3.i68
+  %s.1.i67 = phi float [ %189, %__internal_fmad.exit1.i63 ], [ %.02.i78, %__internal_fmad.exit3.i68 ], !dbg !18
+  %206 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i80 = icmp eq i32 %206, 0, !dbg !18
+  %207 = tail call float @llvm.nvvm.fabs.ftz.f(float %38) #4, !dbg !18
+  %208 = tail call float @llvm.nvvm.fabs.f(float %38) #4, !dbg !18
+  %.01.i81 = select i1 %.not.i80, float %208, float %207, !dbg !18
+  %209 = fcmp ult float %.01.i81, 0x3FE3333340000000, !dbg !18
+  br i1 %209, label %__internal_fmad.exit3.i87, label %__internal_fmad.exit1.i82, !dbg !18
+
+__internal_fmad.exit1.i82:                        ; preds = %__nv_tanhf.exit79
+  %210 = fmul float %.01.i81, 0x4007154760000000, !dbg !18
+  %211 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %210) #4, !dbg !18
+  %212 = fadd float %211, 1.000000e+00, !dbg !18
+  %213 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %212) #5, !dbg !18, !srcloc !19
+  %214 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i83 = icmp eq i32 %214, 0, !dbg !18
+  %215 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %213, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %216 = tail call float @llvm.nvvm.fma.rn.f(float %213, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i84 = select i1 %.not6.i83, float %216, float %215, !dbg !18
+  %217 = fcmp oge float %.01.i81, 0x4022059680000000, !dbg !18
+  %s.0.i85 = select i1 %217, float 1.000000e+00, float %.03.i84, !dbg !18
+  %218 = bitcast float %s.0.i85 to i32, !dbg !18
+  %219 = bitcast float %38 to i32, !dbg !18
+  %220 = and i32 %219, -2147483648, !dbg !18
+  %221 = or i32 %220, %218, !dbg !18
+  %222 = bitcast i32 %221 to float, !dbg !18
+  br label %__nv_tanhf.exit98, !dbg !18
+
+__internal_fmad.exit3.i87:                        ; preds = %__nv_tanhf.exit79
+  %223 = fmul float %38, %38, !dbg !18
+  %224 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i88 = icmp eq i32 %224, 0, !dbg !18
+  %225 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %223, float 0xBFAAC795C0000000) #4, !dbg !18
+  %226 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %223, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i89 = select i1 %.not1.i88, float %226, float %225, !dbg !18
+  %227 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i90 = icmp eq i32 %227, 0, !dbg !18
+  %228 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i89, float %223, float 0x3FC10B2820000000) #4, !dbg !18
+  %229 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i89, float %223, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i91 = select i1 %.not2.i90, float %229, float %228, !dbg !18
+  %230 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i92 = icmp eq i32 %230, 0, !dbg !18
+  %231 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i91, float %223, float 0xBFD5553DA0000000) #4, !dbg !18
+  %232 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i91, float %223, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i93 = select i1 %.not3.i92, float %232, float %231, !dbg !18
+  %233 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i94 = icmp eq i32 %233, 0, !dbg !18
+  %234 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i93, float %223, float 0.000000e+00) #4, !dbg !18
+  %235 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i93, float %223, float 0.000000e+00) #4, !dbg !18
+  %.04.i95 = select i1 %.not4.i94, float %235, float %234, !dbg !18
+  %236 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i96 = icmp eq i32 %236, 0, !dbg !18
+  %237 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i95, float %38, float %38) #4, !dbg !18
+  %238 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i95, float %38, float %38) #4, !dbg !18
+  %.02.i97 = select i1 %.not5.i96, float %238, float %237, !dbg !18
+  br label %__nv_tanhf.exit98, !dbg !18
+
+__nv_tanhf.exit98:                                ; preds = %__internal_fmad.exit1.i82, %__internal_fmad.exit3.i87
+  %s.1.i86 = phi float [ %222, %__internal_fmad.exit1.i82 ], [ %.02.i97, %__internal_fmad.exit3.i87 ], !dbg !18
+  %239 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i99 = icmp eq i32 %239, 0, !dbg !18
+  %240 = tail call float @llvm.nvvm.fabs.ftz.f(float %39) #4, !dbg !18
+  %241 = tail call float @llvm.nvvm.fabs.f(float %39) #4, !dbg !18
+  %.01.i100 = select i1 %.not.i99, float %241, float %240, !dbg !18
+  %242 = fcmp ult float %.01.i100, 0x3FE3333340000000, !dbg !18
+  br i1 %242, label %__internal_fmad.exit3.i106, label %__internal_fmad.exit1.i101, !dbg !18
+
+__internal_fmad.exit1.i101:                       ; preds = %__nv_tanhf.exit98
+  %243 = fmul float %.01.i100, 0x4007154760000000, !dbg !18
+  %244 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %243) #4, !dbg !18
+  %245 = fadd float %244, 1.000000e+00, !dbg !18
+  %246 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %245) #5, !dbg !18, !srcloc !19
+  %247 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i102 = icmp eq i32 %247, 0, !dbg !18
+  %248 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %246, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %249 = tail call float @llvm.nvvm.fma.rn.f(float %246, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i103 = select i1 %.not6.i102, float %249, float %248, !dbg !18
+  %250 = fcmp oge float %.01.i100, 0x4022059680000000, !dbg !18
+  %s.0.i104 = select i1 %250, float 1.000000e+00, float %.03.i103, !dbg !18
+  %251 = bitcast float %s.0.i104 to i32, !dbg !18
+  %252 = bitcast float %39 to i32, !dbg !18
+  %253 = and i32 %252, -2147483648, !dbg !18
+  %254 = or i32 %253, %251, !dbg !18
+  %255 = bitcast i32 %254 to float, !dbg !18
+  br label %__nv_tanhf.exit117, !dbg !18
+
+__internal_fmad.exit3.i106:                       ; preds = %__nv_tanhf.exit98
+  %256 = fmul float %39, %39, !dbg !18
+  %257 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i107 = icmp eq i32 %257, 0, !dbg !18
+  %258 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %256, float 0xBFAAC795C0000000) #4, !dbg !18
+  %259 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %256, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i108 = select i1 %.not1.i107, float %259, float %258, !dbg !18
+  %260 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i109 = icmp eq i32 %260, 0, !dbg !18
+  %261 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i108, float %256, float 0x3FC10B2820000000) #4, !dbg !18
+  %262 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i108, float %256, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i110 = select i1 %.not2.i109, float %262, float %261, !dbg !18
+  %263 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i111 = icmp eq i32 %263, 0, !dbg !18
+  %264 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i110, float %256, float 0xBFD5553DA0000000) #4, !dbg !18
+  %265 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i110, float %256, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i112 = select i1 %.not3.i111, float %265, float %264, !dbg !18
+  %266 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i113 = icmp eq i32 %266, 0, !dbg !18
+  %267 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i112, float %256, float 0.000000e+00) #4, !dbg !18
+  %268 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i112, float %256, float 0.000000e+00) #4, !dbg !18
+  %.04.i114 = select i1 %.not4.i113, float %268, float %267, !dbg !18
+  %269 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i115 = icmp eq i32 %269, 0, !dbg !18
+  %270 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i114, float %39, float %39) #4, !dbg !18
+  %271 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i114, float %39, float %39) #4, !dbg !18
+  %.02.i116 = select i1 %.not5.i115, float %271, float %270, !dbg !18
+  br label %__nv_tanhf.exit117, !dbg !18
+
+__nv_tanhf.exit117:                               ; preds = %__internal_fmad.exit1.i101, %__internal_fmad.exit3.i106
+  %s.1.i105 = phi float [ %255, %__internal_fmad.exit1.i101 ], [ %.02.i116, %__internal_fmad.exit3.i106 ], !dbg !18
+  %272 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not.i118 = icmp eq i32 %272, 0, !dbg !18
+  %273 = tail call float @llvm.nvvm.fabs.ftz.f(float %40) #4, !dbg !18
+  %274 = tail call float @llvm.nvvm.fabs.f(float %40) #4, !dbg !18
+  %.01.i119 = select i1 %.not.i118, float %274, float %273, !dbg !18
+  %275 = fcmp ult float %.01.i119, 0x3FE3333340000000, !dbg !18
+  br i1 %275, label %__internal_fmad.exit3.i125, label %__internal_fmad.exit1.i120, !dbg !18
+
+__internal_fmad.exit1.i120:                       ; preds = %__nv_tanhf.exit117
+  %276 = fmul float %.01.i119, 0x4007154760000000, !dbg !18
+  %277 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %276) #4, !dbg !18
+  %278 = fadd float %277, 1.000000e+00, !dbg !18
+  %279 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %278) #5, !dbg !18, !srcloc !19
+  %280 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not6.i121 = icmp eq i32 %280, 0, !dbg !18
+  %281 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %279, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %282 = tail call float @llvm.nvvm.fma.rn.f(float %279, float -2.000000e+00, float 1.000000e+00) #4, !dbg !18
+  %.03.i122 = select i1 %.not6.i121, float %282, float %281, !dbg !18
+  %283 = fcmp oge float %.01.i119, 0x4022059680000000, !dbg !18
+  %s.0.i123 = select i1 %283, float 1.000000e+00, float %.03.i122, !dbg !18
+  %284 = bitcast float %s.0.i123 to i32, !dbg !18
+  %285 = bitcast float %40 to i32, !dbg !18
+  %286 = and i32 %285, -2147483648, !dbg !18
+  %287 = or i32 %286, %284, !dbg !18
+  %288 = bitcast i32 %287 to float, !dbg !18
+  br label %__nv_tanhf.exit136, !dbg !18
+
+__internal_fmad.exit3.i125:                       ; preds = %__nv_tanhf.exit117
+  %289 = fmul float %40, %40, !dbg !18
+  %290 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not1.i126 = icmp eq i32 %290, 0, !dbg !18
+  %291 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %289, float 0xBFAAC795C0000000) #4, !dbg !18
+  %292 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %289, float 0xBFAAC795C0000000) #4, !dbg !18
+  %.06.i127 = select i1 %.not1.i126, float %292, float %291, !dbg !18
+  %293 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not2.i128 = icmp eq i32 %293, 0, !dbg !18
+  %294 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06.i127, float %289, float 0x3FC10B2820000000) #4, !dbg !18
+  %295 = tail call float @llvm.nvvm.fma.rn.f(float %.06.i127, float %289, float 0x3FC10B2820000000) #4, !dbg !18
+  %.05.i129 = select i1 %.not2.i128, float %295, float %294, !dbg !18
+  %296 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not3.i130 = icmp eq i32 %296, 0, !dbg !18
+  %297 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05.i129, float %289, float 0xBFD5553DA0000000) #4, !dbg !18
+  %298 = tail call float @llvm.nvvm.fma.rn.f(float %.05.i129, float %289, float 0xBFD5553DA0000000) #4, !dbg !18
+  %.0.i131 = select i1 %.not3.i130, float %298, float %297, !dbg !18
+  %299 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not4.i132 = icmp eq i32 %299, 0, !dbg !18
+  %300 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0.i131, float %289, float 0.000000e+00) #4, !dbg !18
+  %301 = tail call float @llvm.nvvm.fma.rn.f(float %.0.i131, float %289, float 0.000000e+00) #4, !dbg !18
+  %.04.i133 = select i1 %.not4.i132, float %301, float %300, !dbg !18
+  %302 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4, !dbg !18
+  %.not5.i134 = icmp eq i32 %302, 0, !dbg !18
+  %303 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04.i133, float %40, float %40) #4, !dbg !18
+  %304 = tail call float @llvm.nvvm.fma.rn.f(float %.04.i133, float %40, float %40) #4, !dbg !18
+  %.02.i135 = select i1 %.not5.i134, float %304, float %303, !dbg !18
+  br label %__nv_tanhf.exit136, !dbg !18
+
+__nv_tanhf.exit136:                               ; preds = %__internal_fmad.exit1.i120, %__internal_fmad.exit3.i125
+  %s.1.i124 = phi float [ %288, %__internal_fmad.exit1.i120 ], [ %.02.i135, %__internal_fmad.exit3.i125 ], !dbg !18
+  %305 = fmul float %s.1.i, 3.000000e+01, !dbg !20
+  %306 = fmul float %s.1.i10, 3.000000e+01, !dbg !20
+  %307 = fmul float %s.1.i29, 3.000000e+01, !dbg !20
+  %308 = fmul float %s.1.i48, 3.000000e+01, !dbg !20
+  %309 = fmul float %s.1.i67, 3.000000e+01, !dbg !20
+  %310 = fmul float %s.1.i86, 3.000000e+01, !dbg !20
+  %311 = fmul float %s.1.i105, 3.000000e+01, !dbg !20
+  %312 = fmul float %s.1.i124, 3.000000e+01, !dbg !20
+  %313 = getelementptr i16, ptr addrspace(1) %1, i64 %10, !dbg !21
+  %314 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %305) #4, !dbg !22
+  %315 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %306) #4, !dbg !22
+  %316 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %307) #4, !dbg !22
+  %317 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %308) #4, !dbg !22
+  %318 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %309) #4, !dbg !22
+  %319 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %310) #4, !dbg !22
+  %320 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %311) #4, !dbg !22
+  %321 = tail call i16 asm "cvt.rn.bf16.f32 $0, $1;", "=h,r"(float %312) #4, !dbg !22
+  %322 = insertelement <2 x i16> undef, i16 %314, i64 0, !dbg !22
+  %323 = insertelement <2 x i16> %322, i16 %315, i64 1, !dbg !22
+  %324 = bitcast <2 x i16> %323 to i32, !dbg !22
+  %325 = insertelement <2 x i16> undef, i16 %316, i64 0, !dbg !22
+  %326 = insertelement <2 x i16> %325, i16 %317, i64 1, !dbg !22
+  %327 = bitcast <2 x i16> %326 to i32, !dbg !22
+  %328 = insertelement <2 x i16> undef, i16 %318, i64 0, !dbg !22
+  %329 = insertelement <2 x i16> %328, i16 %319, i64 1, !dbg !22
+  %330 = bitcast <2 x i16> %329 to i32, !dbg !22
+  %331 = insertelement <2 x i16> undef, i16 %320, i64 0, !dbg !22
+  %332 = insertelement <2 x i16> %331, i16 %321, i64 1, !dbg !22
+  %333 = bitcast <2 x i16> %332 to i32, !dbg !22
+  tail call void asm sideeffect "@$5 st.global.v4.b32 [ $4 + 0 ], { $0, $1, $2, $3 };", "r,r,r,r,l,b"(i32 %324, i32 %327, i32 %330, i32 %333, ptr addrspace(1) %313, i1 true) #4, !dbg !22
+  ret void, !dbg !23
+}
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare noundef i32 @llvm.nvvm.read.ptx.sreg.tid.x() #0
+
+; Function Attrs: alwaysinline nounwind
+define float @__nv_tanhf(float %a) local_unnamed_addr #1 {
+__nv_fabsf.exit:
+  %0 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4
+  %.not = icmp eq i32 %0, 0
+  %1 = tail call float @llvm.nvvm.fabs.ftz.f(float %a) #4
+  %2 = tail call float @llvm.nvvm.fabs.f(float %a) #4
+  %.01 = select i1 %.not, float %2, float %1
+  %3 = fcmp ult float %.01, 0x3FE3333340000000
+  br i1 %3, label %__internal_fmad.exit3, label %__internal_fmad.exit1
+
+__internal_fmad.exit1:                            ; preds = %__nv_fabsf.exit
+  %4 = fmul float %.01, 0x4007154760000000
+  %5 = tail call float @llvm.nvvm.ex2.approx.ftz.f(float %4) #4
+  %6 = fadd float %5, 1.000000e+00
+  %7 = tail call float asm "rcp.approx.ftz.f32 $0,$1;", "=f,f"(float %6) #5, !srcloc !19
+  %8 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4
+  %.not6 = icmp eq i32 %8, 0
+  %9 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %7, float -2.000000e+00, float 1.000000e+00) #4
+  %10 = tail call float @llvm.nvvm.fma.rn.f(float %7, float -2.000000e+00, float 1.000000e+00) #4
+  %.03 = select i1 %.not6, float %10, float %9
+  %11 = fcmp oge float %.01, 0x4022059680000000
+  %s.0 = select i1 %11, float 1.000000e+00, float %.03
+  %12 = bitcast float %s.0 to i32
+  %13 = bitcast float %a to i32
+  %14 = and i32 %13, -2147483648
+  %15 = or i32 %14, %12
+  %16 = bitcast i32 %15 to float
+  br label %33
+
+__internal_fmad.exit3:                            ; preds = %__nv_fabsf.exit
+  %17 = fmul float %a, %a
+  %18 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4
+  %.not1 = icmp eq i32 %18, 0
+  %19 = tail call float @llvm.nvvm.fma.rn.ftz.f(float 0x3F901E1040000000, float %17, float 0xBFAAC795C0000000) #4
+  %20 = tail call float @llvm.nvvm.fma.rn.f(float 0x3F901E1040000000, float %17, float 0xBFAAC795C0000000) #4
+  %.06 = select i1 %.not1, float %20, float %19
+  %21 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4
+  %.not2 = icmp eq i32 %21, 0
+  %22 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.06, float %17, float 0x3FC10B2820000000) #4
+  %23 = tail call float @llvm.nvvm.fma.rn.f(float %.06, float %17, float 0x3FC10B2820000000) #4
+  %.05 = select i1 %.not2, float %23, float %22
+  %24 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4
+  %.not3 = icmp eq i32 %24, 0
+  %25 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.05, float %17, float 0xBFD5553DA0000000) #4
+  %26 = tail call float @llvm.nvvm.fma.rn.f(float %.05, float %17, float 0xBFD5553DA0000000) #4
+  %.0 = select i1 %.not3, float %26, float %25
+  %27 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4
+  %.not4 = icmp eq i32 %27, 0
+  %28 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.0, float %17, float 0.000000e+00) #4
+  %29 = tail call float @llvm.nvvm.fma.rn.f(float %.0, float %17, float 0.000000e+00) #4
+  %.04 = select i1 %.not4, float %29, float %28
+  %30 = tail call i32 @__nvvm_reflect(ptr nonnull @.str) #4
+  %.not5 = icmp eq i32 %30, 0
+  %31 = tail call float @llvm.nvvm.fma.rn.ftz.f(float %.04, float %a, float %a) #4
+  %32 = tail call float @llvm.nvvm.fma.rn.f(float %.04, float %a, float %a) #4
+  %.02 = select i1 %.not5, float %32, float %31
+  br label %33
+
+33:                                               ; preds = %__internal_fmad.exit3, %__internal_fmad.exit1
+  %s.1 = phi float [ %16, %__internal_fmad.exit1 ], [ %.02, %__internal_fmad.exit3 ]
+  ret float %s.1
+}
+
+declare i32 @__nvvm_reflect(ptr) local_unnamed_addr #2
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.nvvm.fabs.ftz.f(float) #0
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.nvvm.fabs.f(float) #0
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
+declare float @llvm.nvvm.ex2.approx.ftz.f(float) #3
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.nvvm.fma.rn.ftz.f(float, float, float) #0
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.nvvm.fma.rn.f(float, float, float) #0
+
+attributes #0 = { mustprogress nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #1 = { alwaysinline nounwind "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) }
+attributes #4 = { nounwind }
+attributes #5 = { nounwind memory(none) }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.dbg.cu = !{!2}
+!nvvm.annotations = !{!4, !5, !5, !4}
+!llvm.ident = !{!6}
+
+!0 = !{i32 2, !"Debug Info Version", i32 3}
+!1 = !{i32 4, !"nvvm-reflect-ftz", i32 1}
+!2 = distinct !DICompileUnit(language: DW_LANG_C, file: !3, producer: "triton", isOptimized: true, runtimeVersion: 0, emissionKind: FullDebug)
+!3 = !DIFile(filename: "cdwt46blqryawhc6lbaljorhowejwux4j3z7tc4f7wrwjolg63yi.py", directory: "/tmp/torchinductor_zeus/dw")
+!4 = !{ptr @triton__0d1d2de, !"kernel", i32 1}
+!5 = !{ptr @triton__0d1d2de, !"maxntidx", i32 128}
+!6 = !{!"clang version 3.8.0 (tags/RELEASE_380/final)"}
+!7 = distinct !DISubprogram(name: "triton__0d1d2de", linkageName: "triton__0d1d2de", scope: !3, file: !3, line: 18, type: !8, scopeLine: 18, spFlags: DISPFlagDefinition | DISPFlagOptimized, unit: !2)
+!8 = !DISubroutineType(cc: DW_CC_normal, types: !9)
+!9 = !{}
+!10 = !DILocation(line: 21, column: 36, scope: !7)
+!11 = !DILocation(line: 20, column: 28, scope: !7)
+!12 = !DILocation(line: 20, column: 33, scope: !7)
+!13 = !DILocation(line: 21, column: 23, scope: !7)
+!14 = !DILocation(line: 24, column: 30, scope: !7)
+!15 = !DILocation(line: 24, column: 35, scope: !7)
+!16 = !DILocation(line: 24, column: 44, scope: !7)
+!17 = !DILocation(line: 26, column: 18, scope: !7)
+!18 = !DILocation(line: 27, column: 24, scope: !7)
+!19 = !{i32 21046}
+!20 = !DILocation(line: 28, column: 18, scope: !7)
+!21 = !DILocation(line: 29, column: 25, scope: !7)
+!22 = !DILocation(line: 29, column: 36, scope: !7)
+!23 = !DILocation(line: 29, column: 4, scope: !7)
