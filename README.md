@@ -73,7 +73,7 @@ For the training configuration please check the yaml from the repo. Below is the
 
 ![Loss over Training Steps](assets/images/pretrained_image.png)
 
-### Hyperparameters: Learning Rate Warmup and Maximum Learning Rate
+#### Hyperparameters: Learning Rate Warmup and Maximum Learning Rate
 
 Before training, two key hyperparameters need attention: **learning rate warmup** and **maximum learning rate**.
 
@@ -88,5 +88,44 @@ Balancing these hyperparameters is essential for stable and effective training.
 
 ## Finetuning
 
+Underway, stay tune for the updates. Scheduled to be complete before 5 September 2024
 
+## References
 
+```bibtex
+@misc{litgpt-2023,
+  author       = {Lightning AI},
+  title        = {LitGPT},
+  howpublished = {\url{https://github.com/Lightning-AI/litgpt}},
+  year         = {2023},
+}
+```
+```bibtex
+@article{jain2023neftune,
+    title={NEFTune: Noisy Embeddings Improve Instruction Finetuning},
+    author={Jain, Neel and Chiang, Ping-yeh and Wen, Yuxin and Kirchenbauer, John and Chu, Hong-Min and Somepalli, Gowthami and Bartoldson, Brian R and Kailkhura, Bhavya and Schwarzschild, Avi and Saha, Aniruddha and others},
+    journal={arXiv preprint arXiv:2310.05914},
+    year={2023}
+}
+```
+```bibtex
+@article{jain2023neftune,
+    title={Continual Pre-Training of Large Language Models: How to (re)warm your model?},
+    author={Kshitij Gupta and others},
+    journal={arXiv preprint arXiv:2308.04014},
+    year={2023}
+}
+```
+
+## Citation
+
+If you find the model, data, code in our project useful, please consider citing our work as follows:
+
+```bibtex
+@misc{litgpt-2023,
+  author       = {Hector Motsepe JR},
+  title        = {BafoGPT},
+  howpublished = {\url{https://github.com/Motsepe-Jr/bafoGPT}},
+  year         = {2024},
+}
+```
