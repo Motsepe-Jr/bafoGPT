@@ -1,6 +1,6 @@
 # bafoGPT
 
-🌐 [Homepage](#) | 🤗 [Hub](#) | 📖 [arXiv](#) | [GitHub](https://github.com/Motsepe-Jr/bafoGPT)
+🌐 [Homepage](#) | 🤗 [Hub](https://huggingface.co/ChallengerSpaceShuttle/continued-trained-gemma2-2b)  | [GitHub](https://github.com/Motsepe-Jr/bafoGPT)
 
 ## Overview
 
@@ -30,7 +30,7 @@ For the pretraining of **BafoGT**, I collected diverse internet-based data sourc
 
 The model first learn to map Zulu words and sentences to their English equivalents,  progressing to more complex data soruce such as wikipedia, new articles etc.
 
-- **Books**: [Zulu-English Dictionary by Bishop Colenso](https://archive.org/details/zuluenglishdicti00brya) – A dictionary offering Zulu terms with English definitions, ideal for teaching basic word mappings.
+- **Books**: [Zulu-English Dictionary](https://archive.org/details/zuluenglishdicti00brya) – A dictionary offering Zulu terms with English definitions, ideal for teaching basic word mappings.
 - **Translation**: [South African Government Speeches](https://www.gov.za/news/inkulumo-echaza-isimo-sezwe-ithulwa-ngumhlonishwa-jg-zuma-umongameli-weriphabhulikhi) – Official speeches in Zulu, which help the model understand structured Zulu sentences and phrases.
 - **Transcription**: [Zulu Community Corpus](https://corpora.uni-leipzig.de/en?corpusId=zul_community_2017) – A collection of transcriptions, exposing the model to real-life conversational Zulu.
 - **Document**: [Leipzig Corpora Collection](https://wortschatz.uni-leipzig.de/en) – Text from various Zulu documents, helping the model understand written Zulu.
@@ -39,17 +39,42 @@ The model first learn to map Zulu words and sentences to their English equivalen
 - **Web**: Various websites – Diverse web-scraped content in Zulu, providing a wide range of linguistic inputs.
 - **Wikipedia**: [Zulu Wikipedia](https://zu.wikipedia.org/wiki/) – Articles in Zulu covering various topics, offering an informative and factual base for the model.
 
-### Fine-tuning Dataset
+### Fine-tuning Dataset 🤗 [Hub](https://huggingface.co/datasets/ChallengerSpaceShuttle/zulu-finetuning-dataset)
 
 For the fine-tuning phase, I leveraged large-scale datasets translated into Zulu. This included translating the entire **Cosmopedia** dataset from Hugging Face, along with a **WikiHow** dump translated into Zulu. The innovative aspect of this process was to train the model using bilingual question-answering pairs, where questions were posed in Zulu, and the model responded in English. This forced the model to not only understand Zulu but also to navigate between both languages effectively.
 
 By training BafoGT this way, I encouraged cross-lingual knowledge transfer, enhancing the model’s capability to understand and generate coherent text in both Zulu and English. This fine-tuning method provided a robust base for both translation and generation tasks in these languages.
 
-## Tokenizer
+## Tokenizer 🤗 [Hub](https://huggingface.co/ChallengerSpaceShuttle/continued-trained-gemma2-2b)
 
-## Training
+The tokenizer for **BafoGT** was designed to handle Zulu text more efficiently, especially considering the challenges posed by long sequence lengths in transformer architectures. The goal was to reduce the computational burden associated with the quadratic scaling of the attention mechanism.
+
+To achieve this, I trained the tokenizer on the pretraining dataset using Byte-Pair Encoding (BPE), generating 40,000 sub-tokens/sub-words. This choice of vocabulary size was intended to compress the Zulu text in a way that balances tokenization efficiency with the overall model performance during training and inference.
+
+The newly generated 40,000 Zulu-specific tokens were appended to the original **Gemma-2-2B** vocabulary, which had a size of 288256 tokens (excluding duplicates and padded). The BPE tokenizer compresses Zulu text effectively, thereby reducing the number of tokens needed to represent a given sequence. This, in turn, lessens the impact of the **n² attention** complexity, optimizing both training and inference times without compromising the model’s ability to understand complex linguistic structures in Zulu.
+
+The tokenizer training code can be found in the following directory:  
+**`tokenization/train_tokenizer.py`**
+
+## Training 🤗 [Hub](https://huggingface.co/ChallengerSpaceShuttle/continued-trained-gemma2-2b)
+
+With the tokenizer in place, the next step was to initialize the model's embedding table (`wte`) to accommodate the expanded vocabulary. The 40,000 newly generated Zulu-specific tokens were appended to the original Gemma-2-2B vocabulary. To ensure smooth training and faster convergence, I initialized the embeddings for the new Zulu tokens by averaging the embedding vectors from the original Gemma-2-2B base embeddings.
+
+Additionally, for improved training stability and better performance on the GPU, I made sure that the new Zulu tokens were added in multiples of 64. This was necessary because the vocabulary size determines the dimensions of matrix multiplications in the output layer of the model, and these operations are highly sensitive to alignment. NVIDIA’s documentation suggests that alignment to 64 elements yields better performance due to optimized matmul operations, significantly boosting throughput during training.
+
+For the training configuration please check the yaml from the repo. Below is the training loss of 10-000 training steps
+![Loss over Training Steps](assets/images/pretrained_image.png)
+
+
+![Learning Rate Over Training Steps](assets/images/learning_rate.png)
+
+
+#### Infrastructure Setup
+
+I used 4 L40 GPUs for the training process, leveraging a multi-GPU setup for efficient model parallelism. I employed the Fully Sharded Data Parallel (FSDP) strategy to distribute both model parameters and optimizer states across GPUs. This strategy included:
+
+- Full Shard for sharding both model and optimizer states
+- Activation Checkpointing and Gradient Checkpointing to reduce memory usage and
 
 ## Finetuning
-
-## Model and Dataset Download
 
