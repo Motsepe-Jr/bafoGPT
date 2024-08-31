@@ -4,7 +4,7 @@
 
 ## Overview
 
-Presenting BafoGPT-2-2B-base and BafoGPT-2-2B-it, open-source Zulu language models derived from the Gemma-2-2b architecture. These models underwent continuous pre-training on approximately 200 million tokens over 36 hours using 4 L40 GPUs. With a budget of under R10,000, they deliver performance comparable to models that typically require millions to train from scratch. 
+Presenting BafoGPT-2-2B-base and BafoGPT-2-2B-it, open-source Zulu language models derived from the Gemma-2-2b architecture. These models underwent continuous pre-training on approximately 200 million tokens over 36 hours using 4 L40 GPUs. With a budget of under R10,000, they deliver performance comparable to models that typically require millions of dollars to train from scratch. 
 
 Licensed under the permissive Gemma-2 and Apache 2.0 licenses, these models support both commercial use and further innovation. BafoGPT-2-2B-base is designed for both IsiZulu and English languages, promoting research and innovation in African AI development. I hope this work inspires further contributions and advancements in this space.
 
