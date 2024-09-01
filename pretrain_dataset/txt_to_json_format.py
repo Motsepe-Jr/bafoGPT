@@ -28,8 +28,7 @@ def convert_to_jsonl(input_text, tokenizer, max_tokens=8192):
             token_count += line_token_count
 
         total_token_count += line_token_count  
-
-        print("token-count so far -->>>", token_count)
+        
         print("so far --> %", index / len(input_text))
 
     if combined_text:

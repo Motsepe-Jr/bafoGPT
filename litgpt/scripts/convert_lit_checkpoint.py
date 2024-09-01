@@ -333,7 +333,7 @@ def convert_lit_checkpoint(checkpoint_dir: Path, output_dir: Path) -> None:
     config = Config.from_file(checkpoint_dir / "model_config.yaml")
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_path = output_dir / "model.pth"
+    output_path = output_dir / "pytorch_model.bin"
 
     if "falcon" in config.name:
         copy_fn = partial(copy_weights_falcon, config.name)
