@@ -12,7 +12,6 @@ triton
 .lightning_studio
 # data
 data
-pretrain_dataset
 pretrained_model
 pretrained_model_log
 datasets

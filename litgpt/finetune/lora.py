@@ -102,7 +102,7 @@ def setup(
         seed: The random seed to use for reproducibility.
         access_token: Optional API token to access models with restrictions.
     """
-    print("fuck you")
+
     checkpoint_dir = auto_download_checkpoint(model_name=checkpoint_dir, access_token=access_token)
     pprint(locals())
     data = Alpaca() if data is None else data
@@ -136,9 +136,7 @@ def setup(
                 "This may result in errors when using quantization."
             )
         dtype = {"16-true": torch.float16, "bf16-true": torch.bfloat16, "32-true": torch.float32}[precision]
-        print("not looking good withs bits")
         plugins = BitsandbytesPrecision(quantize[4:], dtype)
-        print("loooking good with bits")
         precision = None
 
     if devices * num_nodes > 1:
@@ -166,7 +164,6 @@ def setup(
         plugins=plugins,
     )
 
-    fabric.print("after fabric before")
 
     if torch.cuda.is_available() and devices > 1:
         check_nvlink_connectivity(fabric)
@@ -197,8 +194,6 @@ def main(
 
     if fabric.global_rank == 0:
         os.makedirs(out_dir, exist_ok=True)
-
-    fabric.print("metrics", lr_max_steps, steps_per_epoch)
 
     checkpoint_path = checkpoint_dir / "lit_model.pth"
     with fabric.init_module(empty_init=(fabric.world_size > 1)):
