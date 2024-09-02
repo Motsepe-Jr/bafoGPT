@@ -10,6 +10,7 @@ Licensed under the permissive Gemma-2 and Apache 2.0 licenses, these models supp
 
 ## News
 
+🔥 **[2024/09/02]:** The finetuning code and model have been released, and we also invite you to follow our Repo. 😆
 🔥 **[2024/08/20]:** The pretraining code has been released, and we also invite you to follow our Repo. 😆
 
 ## Main Contributions of this Project 
