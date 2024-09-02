@@ -86,7 +86,7 @@ Balancing these hyperparameters is essential for stable and effective training.
 ![Learning Rate Over Training Steps](assets/images/learning_rate.png)
 
 
-## Fine-tuning BafoGPT-2-2B with QLoRA
+## Fine-tuning BafoGPT-2-2B with QLoRA 🤗[Hub](https://huggingface.co/ChallengerSpaceShuttle/finetuned-qlora-bafoGPT-2/tree/main)
 
 I fine-tuned the **BafoGPT-2-2B-base** model using [QLoRA](https://arxiv.org/abs/2305.14314), a method that reduces memory usage by backpropagating gradients through a frozen, 4-bit quantized pretrained language model into Low-Rank Adapters (LoRA). This was done on a **single A10 (24GB) GPU**.
 
