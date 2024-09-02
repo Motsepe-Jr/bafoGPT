@@ -76,6 +76,7 @@ def generate(
 
 
 def process_prompt(prompt, model, tokenizer, prompt_style, fabric, temperature, max_new_tokens, top_k, top_p, stop_tokens):
+    print(f"Fabric device: {fabric.device}")
     prompt = prompt_style.apply(prompt=prompt)
     encoded_prompt = tokenizer.encode(prompt, device=fabric.device)
 
@@ -91,7 +92,7 @@ def process_prompt(prompt, model, tokenizer, prompt_style, fabric, temperature, 
     y: Iterator[torch.Tensor] = generate(
         model, encoded_prompt, max_returned_tokens, temperature=temperature, top_k=top_k, top_p=top_p, stop_tokens=stop_tokens
     )
-    token_generator: Iterator[str] = tokenizer.decode_stream(y)
+    token_generator: Iterator[str] = tokenizer.decode_stream(y, device=fabric.device)
 
     fabric.print(">> Reply: ", end="")
 
@@ -137,7 +138,6 @@ def interact(multiline, model, tokenizer, prompt_style, fabric, temperature, max
             break
 
         process_prompt(prompt, model, tokenizer, prompt_style, fabric, temperature, max_new_tokens, top_k, top_p, stop_tokens)
-
 
 @torch.inference_mode()
 def main(

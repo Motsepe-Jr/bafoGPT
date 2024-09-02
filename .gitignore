@@ -5,6 +5,10 @@ __pycache__
 build
 dist
 .venv
+venv
+.linuz_env
+linuz_env
+models
 .vscode
 .triton
 lightning_studio
