@@ -26,8 +26,8 @@ def push_folder_to_hub(local_folder, repo_name, repo_type="model"):
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
-# Example usage
-local_folder = "../pretrained_model/models/step-00009000"
-repo_name = "ChallengerSpaceShuttle/continued-trained-gemma2-2b"
+
+local_folder = ".../out/finetune/lora/logs/step-0140000/"
+repo_name = "ChallengerSpaceShuttle/finetuned-qlora-bafoGPT-2"
 
 push_folder_to_hub(local_folder, repo_name)
