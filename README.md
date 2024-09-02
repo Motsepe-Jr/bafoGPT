@@ -17,7 +17,7 @@ Licensed under the permissive Gemma-2 and Apache 2.0 licenses, these models supp
 - **Vocab Expansion**: Expanded the Gemma-2-2B vocabulary size with 40,000 Zulu tokens for enhanced encoding/decoding efficiency.
 - **Largest IsiZulu Dataset**: Open-sourced the largest IsiZulu supervised fine-tuning and pretraining datasets.
 - **Large-Scale Data Collection and Processing Scripts**: Includes a separate repository for collecting, cleansing, and processing datasets wriiten in `Scala/Spark`.
-- **First IsiZulu LLM Evals**: Inspired by [Aleska Gordic](https://github.com/gordicaleksa/serbian-llm-eval) created LLM evals: Common Sense Reasoning "Hellaswag", World Knowledge "Natural Questions" and Reading Comprehension "IsiZulu Grade 12 Exams".
+- **First IsiZulu LLM Evals**: Inspired by [Aleska Gordic](https://github.com/gordicaleksa/serbian-llm-eval), I also created LLM evals for IsiZulu: Common Sense Reasoning "Hellaswag", World Knowledge "Natural Questions" and Reading Comprehension "IsiZulu Grade 12 Exams".
 - **Open Source**: Open sourcing both BafoGPT-2-2B-base and BafoGPT-2-2B-it, Our work is made possible by the open-source community. Special thanks to the teams behind [LitGPT](https://github.com/Lightning-AI/litgpt) and [Google's research](https://arxiv.org/pdf/2403.08295).
 
 ## Dataset
