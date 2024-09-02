@@ -4,10 +4,9 @@
 
 ## Overview
 
-Presenting BafoGPT-2-2B-base and BafoGPT-2-2B-it, open-source Zulu language models derived from the Gemma-2-2b architecture. These models underwent continuous pre-training on approximately 200 million tokens over 36 hours using 4 L40 GPUs. With a budget of under R10,000, they deliver performance comparable to models that typically require millions of dollars to train from scratch. 
+Presenting BafoGPT-2-2B-base and BafoGPT-2-2B-it, open-source Zulu language models derived from the Gemma-2-2b architecture. These models underwent continuous pre-training on approximately 200 million tokens over 36 hours using 4 L40 GPUs. With a budget of under R10_000, we aimed to achieve performance comparable to models that typically require millions of dollars to train from scratch.
 
 Licensed under the permissive Gemma-2 and Apache 2.0 licenses, these models support both commercial use and further innovation. BafoGPT-2-2B-base is designed for both IsiZulu and English languages, promoting research and innovation in African AI development. I hope this work inspires further contributions and advancements in this space.
-
 
 ## News
 
@@ -17,7 +16,8 @@ Licensed under the permissive Gemma-2 and Apache 2.0 licenses, these models supp
 
 - **Vocab Expansion**: Expanded the Gemma-2-2B vocabulary size with 40,000 Zulu tokens for enhanced encoding/decoding efficiency.
 - **Largest IsiZulu Dataset**: Open-sourced the largest IsiZulu supervised fine-tuning and pretraining datasets.
-- **Large-Scale Data Collection and Processing Scripts**: Includes a separate repository for collecting, cleansing, and processing datasets.
+- **Large-Scale Data Collection and Processing Scripts**: Includes a separate repository for collecting, cleansing, and processing datasets wriiten in `Scala/Spark`.
+- **First IsiZulu LLM Evals**: Inspired by [Aleska Gordic](https://github.com/gordicaleksa/serbian-llm-eval) created LLM evals: Common Sense Reasoning "Hellaswag", World Knowledge "Natural Questions" and Reading Comprehension "IsiZulu Grade 12 Exams".
 - **Open Source**: Open sourcing both BafoGPT-2-2B-base and BafoGPT-2-2B-it, Our work is made possible by the open-source community. Special thanks to the teams behind [LitGPT](https://github.com/Lightning-AI/litgpt) and [Google's research](https://arxiv.org/pdf/2403.08295).
 
 ## Dataset
@@ -98,9 +98,9 @@ I fine-tuned the **BafoGPT-2-2B-base** model using [QLoRA](https://arxiv.org/abs
 #### LoRA Application
 - Applied LoRA to the `query`, `key`, `value`, and `projection` matrices.
 - Skipped `mlp` due to compute budget.
-- No LoRA on the `embedding` and `classification` layers since new tokens were learned during continued pretraining.
+- No LoRA on the `embedding` and `classification` layers since new tokens were learned during continued pretraining. By skipping LoRA for embedding and head, we leveraged token representation learned in continued pretraining.
   
-The QLoRA paper confirms the effectiveness of applying LoRA to all transformer blocks. By skipping LoRA for embedding, we leveraged token representation learned in pretraining.
+The QLoRA paper confirms the effectiveness of applying LoRA to all transformer blocks in order to match full finetune performance. So by skipping the `mlp` we took a hit in accuracy in favour of performance/memory.
 
 #### Quantization
 - **4-bit quantization** (NormalFloat, NF4) was used, along with **double-quantization**.
@@ -114,6 +114,18 @@ Using `bfloat16` (`--precision "bf16-true"`) reduced memory consumption compared
 
 ### Merging LoRA Weights
 After fine-tuning with LoRA, a `lit_model.pth.lora` file is generated. This file contains only the LoRA weights, which are much smaller than the original model checkpoint to save space. You can find the weights on [Hugging Face Hub](https://huggingface.co/ChallengerSpaceShuttle/finetuned-qlora-bafoGPT-2/tree/main).
+
+### Mistakes and Challenges Faced
+
+- **Continued Pretraining on Instruction-Tuned Model**: I continued pretraining on the Gemma2-2b base model. In hindsight, continuing to pretrain on an instruction-tuned model may help the model grasp concepts more efficiently. While a base model is trained to predict the next token, an instruction-tuned model is trained to predict the next token while also answering instructions/questions. Given a random sentence, the instruction-tuned model might reason about it, first recognizing it as Zulu language. Not 100% about this though
+
+- **Lack of Systematic Continuous Integration and Development**: Downloading a 37 GB model from the cloud can take hours, and checkpoints can quickly consume disk space in the working environment. A systematic development process is crucial, including:
+  - Efficiently pulling and pushing models to/from cloud storage/huggingface
+  - Pushing and pulling code from GitHub
+  - Using SSH for local terminal commands
+  - Streaming large datasets from S3 to reduce cloud costs
+
+I have created scripts to enable smoother development, but implementing a more robust CI/CD pipeline earlier would have saved time and resources.
 
 ## References
 
