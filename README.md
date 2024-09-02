@@ -90,6 +90,8 @@ Balancing these hyperparameters is essential for stable and effective training.
 
 I fine-tuned the **BafoGPT-2-2B-base** model using [QLoRA](https://arxiv.org/abs/2305.14314), a method that reduces memory usage by backpropagating gradients through a frozen, 4-bit quantized pretrained language model into Low-Rank Adapters (LoRA). This was done on a **single A10 (24GB) GPU**.
 
+![Finetune Loss Over Training Steps](assets/images/finetuned_loss.png)
+
 #### Dataset
 - **IsiZulu Wikihow** combined with the **Alpaca dataset** (translated 52K instruction-following data, based on [Self-Instruct](https://arxiv.org/abs/2212.10560)).
 - Total: 200K instructions.
