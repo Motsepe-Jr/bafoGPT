@@ -90,29 +90,29 @@ Balancing these hyperparameters is essential for stable and effective training.
 
 I fine-tuned the **BafoGPT-2-2B-base** model using [QLoRA](https://arxiv.org/abs/2305.14314), a method that reduces memory usage by backpropagating gradients through a frozen, 4-bit quantized pretrained language model into Low-Rank Adapters (LoRA). This was done on a **single A10 (24GB) GPU**.
 
-### Dataset
+#### Dataset
 - **IsiZulu Wikihow** combined with the **Alpaca dataset** (translated 52K instruction-following data, based on [Self-Instruct](https://arxiv.org/abs/2212.10560)).
 - Total: 200K instructions.
 - **IsiZulu Cosmopedia** (100K) was not included due to budget limits.
 
-### LoRA Application
+#### LoRA Application
 - Applied LoRA to the `query`, `key`, `value`, and `projection` matrices.
 - Skipped `mlp` due to compute budget.
 - No LoRA on the `embedding` and `classification` layers since new tokens were learned during continued pretraining.
   
 The QLoRA paper confirms the effectiveness of applying LoRA to all transformer blocks. By skipping LoRA for embedding, we leveraged token representation learned in pretraining.
 
-### Quantization
+#### Quantization
 - **4-bit quantization** (NormalFloat, NF4) was used, along with **double-quantization**.
 
-### Training Settings
+#### Training Settings
 | Settings                                     | Training Memory | Training Time | Inference Memory  |
 |--------------------------------------------- |-----------------|---------------|-------------------|
 |`--precision bf16-true --quantize bnb.nf4-dq` |                 |               |                   |
 
 Using `bfloat16` (`--precision "bf16-true"`) reduced memory consumption compared to full precision (`--precision "32-full"`). BF16 avoids overflow issues common with FP16 and works well for large models while maintaining efficient training with lower precision.
 
-### Merging LoRA Weights (Optional)
+### Merging LoRA Weights
 After fine-tuning with LoRA, a `lit_model.pth.lora` file is generated. This file contains only the LoRA weights, which are much smaller than the original model checkpoint to save space. You can find the weights on [Hugging Face Hub](https://huggingface.co/ChallengerSpaceShuttle/finetuned-qlora-bafoGPT-2/tree/main).
 
 ## References
