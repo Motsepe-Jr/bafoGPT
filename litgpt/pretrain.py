@@ -62,7 +62,7 @@ def setup(
         max_norm=1.0,
         min_lr=4e-5,
         lr_warmup_steps=2000,
-        tie_embeddings=False,
+        tie_embeddings=True, # did I make a mistake
         max_seq_length=2048,
     ),
     eval: EvalArgs = EvalArgs(interval=1000, max_iters=100),
